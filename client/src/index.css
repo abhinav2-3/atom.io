@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.feed {
+    &::-webkit-scrollbar {
+        width: 5px;
+        background-color: transparent;
+        color: transparent;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+        /* color of the track */
+    }
+
+    /* Handle (thumb) style */
+    &::-webkit-scrollbar-thumb {
+        background: transparent;
+        /* color of the thumb */
+        border-radius: 5px;
+        /* roundness of the thumb */
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: #555;
+        /* color of the thumb on hover */
+    }
+}
