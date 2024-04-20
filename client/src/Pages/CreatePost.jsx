@@ -6,8 +6,11 @@ import { useDispatch } from "react-redux";
 import { getAllFeeds } from "../App/feedSlice";
 import toast from "react-hot-toast";
 import authError from "../Utils/AuthError";
+import { useNavigate } from "react-router-dom";
+
 const CreatePost = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { getCookie } = useCookie();
   const user = getCookie("userData");
@@ -30,6 +33,8 @@ const CreatePost = () => {
       if (response.status === 201) {
         toast.success("Post Created");
         dispatch(getAllFeeds());
+        setPost("");
+        navigate("/");
       }
     } catch (error) {
       console.log(error);

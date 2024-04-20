@@ -11,6 +11,7 @@ import { Toaster } from "react-hot-toast";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getAllFeeds } from "./App/feedSlice";
+import UserList from "./Components/UserList";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ function App() {
           <Route path="/createpost" element={<CreatePost />} />
           <Route path="/youraccount" element={<Account />} />
           <Route path="/editProfile" element={<EditProfile />} />
+          <Route path="/userslist" element={<UserList />} />
         </Routes>
         <Footer />
       </Router>

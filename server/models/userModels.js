@@ -24,9 +24,11 @@ const userSchema = new mongoose.Schema({
     type: [String],
     required: true,
   },
-  followingCount: { type: Number },
-  followersCount: { type: Number },
   posts: { type: mongoose.Schema.Types.ObjectId, ref: "Post" },
+  connections: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "User",
+  },
 });
 
 export default mongoose.model("User", userSchema);

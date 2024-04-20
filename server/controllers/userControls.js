@@ -131,3 +131,25 @@ export const guest = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const getAllUsers = async (req, res) => {
+  const { id } = req.body;
+  try {
+    const users = await User.find();
+    const newUsers = users.filter((user) => user._id.toString() !== id);
+    return res.status(201).json({ success: true, newUsers });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+export const addConnection = async (req, res) => {
+  const userId = "661f68712c7424bfac286125";
+  const connectedUserId = "6617e3c106d4310de6edcb83"; // Replace with actual user ID
+  const user = await User.findById(userId);
+  user.connections.push(connectedUserId);
+  await user.save();
+  const newUser = await User.findById(userId);
+  console.log(newUser);
+  return res.send("hii");
+};
