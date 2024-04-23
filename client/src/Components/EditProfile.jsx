@@ -1,30 +1,23 @@
-import { useEffect, useState } from "react";
-import { FaRegEyeSlash } from "react-icons/fa";
-import { IoEyeOutline } from "react-icons/io5";
+import { useState } from "react";
 import useCookie from "../Hooks/useCookie";
+import axios from "axios";
+import { API_UPDATE_USERPROFILE } from "../Utils/APIs";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import authError from "../Utils/AuthError";
 
 const EditProfile = () => {
-  const { getCookie } = useCookie();
-  const [showPassword, setShowPassword] = useState(false);
-  const [userData, setUserData] = useState(null);
-  const cookie = getCookie("userData");
-  useEffect(() => {
-    setUserData(JSON.parse(cookie));
-    console.log(userData);
-  }, []);
-  console.log(userData);
-  const [formData, setFormData] = useState({
-    name: "",
-    username: "",
-    email: "",
-    password: "",
-    number: "",
-  });
+  const { getCookie, setCookie } = useCookie();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-  };
+  const cookie = getCookie("userData");
+
+  const [formData, setFormData] = useState({
+    name: cookie.name || "",
+    username: cookie.username || "",
+    email: cookie.email || "",
+    password: cookie.password || "",
+  });
 
   const handleValue = (e) => {
     const { name, value } = e.target;
@@ -32,6 +25,20 @@ const EditProfile = () => {
       ...formData,
       [name]: value,
     });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(API_UPDATE_USERPROFILE, formData);
+      if (response.status === 201) {
+        setCookie("userData", JSON.stringify(response.data?.user), 2);
+        toast.success(response?.data?.message);
+        navigate("/youraccount");
+      }
+    } catch (error) {
+      authError(error);
+    }
   };
 
   return (
@@ -46,7 +53,7 @@ const EditProfile = () => {
           name="name"
           value={formData.name}
           placeholder="FullName"
-          onChange={(e) => handleValue(e)}
+          onChange={handleValue}
           className="outline-none border rounded py-1 px-4 text-p_black w-full"
         />
       </div>
@@ -57,7 +64,7 @@ const EditProfile = () => {
           name="username"
           value={formData.username}
           placeholder="dev_28"
-          onChange={(e) => handleValue(e)}
+          onChange={handleValue}
           className="outline-none border rounded py-1 px-4 text-p_black w-full"
         />
       </div>
@@ -66,47 +73,8 @@ const EditProfile = () => {
         <input
           type="email"
           name="email"
-          value={formData.email}
+          defaultValue={formData.email}
           placeholder="example@gmail.com"
-          onChange={(e) => handleValue(e)}
-          className="outline-none border rounded py-1 px-4 text-p_black w-full"
-        />
-      </div>
-      <div className="flex flex-col items-start w-2/3">
-        <label className="text-lg font-medium">Password</label>
-        <div className="flex justify-between rounded bg-white border w-full items-center">
-          <input
-            type={`${showPassword ? "text" : "password"}`}
-            name="password"
-            onChange={(e) => handleValue(e)}
-            placeholder="password"
-            className="outline-none border-none rounded py-1 px-4 text-p_black w-full"
-          />
-          {showPassword ? (
-            <FaRegEyeSlash
-              size={25}
-              color="black"
-              className="mx-2 cursor-pointer"
-              onClick={() => setShowPassword(!showPassword)}
-            />
-          ) : (
-            <IoEyeOutline
-              size={25}
-              color="black"
-              className="mx-2 cursor-pointer"
-              onClick={() => setShowPassword(!showPassword)}
-            />
-          )}
-        </div>
-      </div>
-      <div className="flex flex-col items-start w-2/3">
-        <label className="text-lg font-medium">Phone No.</label>
-        <input
-          type="number"
-          name="number"
-          value={formData.number}
-          placeholder="000011110"
-          onChange={(e) => handleValue(e)}
           className="outline-none border rounded py-1 px-4 text-p_black w-full"
         />
       </div>

@@ -1,12 +1,18 @@
 import { Link } from "react-router-dom";
 import { FaHeart, FaBookmark } from "react-icons/fa";
+import useCookie from "../Hooks/useCookie";
 
 const ProfileData = () => {
+  const { getCookie } = useCookie();
+  const user = getCookie("userData");
+
   return (
     <section className="flex justify-around items-center py-2">
       <div>
         <span className="text-xl font-semibold">Connections : </span>
-        <span className="text-xl font-bold text-p_Blue">38</span>
+        <span className="text-xl font-bold text-p_Blue">
+          {user.connections.length}
+        </span>
       </div>
       <div className="flex gap-4">
         <Link

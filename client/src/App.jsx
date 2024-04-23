@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getAllFeeds } from "./App/feedSlice";
 import UserList from "./Components/UserList";
+import PrivateComponents from "./Utils/PrivateComponents";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,13 +27,15 @@ function App() {
       <Router>
         <Header />
         <Routes>
+          <Route element={<PrivateComponents />}>
+            <Route path="/createpost" element={<CreatePost />} />
+            <Route path="/youraccount" element={<Account />} />
+            <Route path="/editProfile" element={<EditProfile />} />
+            <Route path="/userslist" element={<UserList />} />
+          </Route>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/createpost" element={<CreatePost />} />
-          <Route path="/youraccount" element={<Account />} />
-          <Route path="/editProfile" element={<EditProfile />} />
-          <Route path="/userslist" element={<UserList />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
         <Footer />
       </Router>

@@ -26,7 +26,7 @@ const PostButtons = (data) => {
   };
 
   return (
-    <div className="flex justify-between pt-2 border-t mt-4">
+    <div className="flex justify-between pt-2 mt-4">
       <div className="flex flex-col w-10 justify-center items-center">
         <button onClick={() => likeAndSaveHandle(data._id, "like")}>
           <FaRegHeart size={20} />

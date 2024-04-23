@@ -7,9 +7,12 @@ import { API_SIGNUP } from "../Utils/APIs";
 import toast from "react-hot-toast";
 import authError from "../Utils/AuthError";
 import useCookie from "../Hooks/useCookie";
+import { useDispatch } from "react-redux";
+import { addUser } from "../App/userSlice";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const disptach = useDispatch();
   const { setCookie } = useCookie();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -26,6 +29,7 @@ const Signup = () => {
       if (response.status === 201) {
         console.log(response);
         navigate("/");
+        disptach(addUser(response?.data?.user));
         setCookie("userData", JSON.stringify(response.data?.user), 2); //Setting cookie
         toast.success("Registered Successfully");
       }

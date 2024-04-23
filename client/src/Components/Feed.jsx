@@ -1,7 +1,7 @@
 import Card from "../Components/Card";
 import { useSelector } from "react-redux";
-import Loading from "./Loading";
 import Error from "./Error";
+import Loader from "./Loader";
 
 const Feed = () => {
   const feeds = useSelector((state) => state.feed.feeds);
@@ -10,7 +10,7 @@ const Feed = () => {
   return (
     <>
       {status === "loading" ? (
-        <Loading />
+        <Loader />
       ) : status === "error" ? (
         <Error />
       ) : (

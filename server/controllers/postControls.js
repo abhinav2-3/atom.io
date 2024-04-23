@@ -8,13 +8,22 @@ export const createPost = async (req, res) => {
     return res.status(400).json({ error: "Input Fields is required" });
   try {
     const user = await User.findOne({ username });
+
     if (!user) return res.status(401).json({ error: "User Doesn't Exist" });
+
     await Post.create({
       postedBy: user._id,
       post,
       username,
       name: user.name,
     });
+
+    await User.findOneAndUpdate(
+      { username },
+      { $push: { posts: user._id } },
+      { new: true }
+    );
+
     return res.status(201).json({ success: true, msg: "Post Created" });
   } catch (error) {
     handlerErrors(error, res, 500, "Internal Server Error");
@@ -43,7 +52,9 @@ export const feed = async (req, res) => {
   try {
     const feedPosts = await Post.find();
 
-    return res.status(200).json({ success: true, feedPosts });
+    const sortedPost = feedPosts.sort((a, b) => b.createdAt - a.createdAt);
+
+    return res.status(200).json({ success: true, sortedPost });
   } catch (error) {
     handlerErrors(error, res, 500, "Internal Server Error");
   }

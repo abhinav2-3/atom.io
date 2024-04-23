@@ -14,12 +14,14 @@ const Login = () => {
   const [userData, setUserData] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const { setCookie, getCookie } = useCookie();
   const cookie = getCookie("userData");
 
   const [showPassword, setShowPassword] = useState(false);
+
   useEffect(() => {
-    setUserData(JSON.parse(cookie));
+    setUserData(cookie);
   }, []);
 
   userData && navigate("/");
@@ -36,7 +38,7 @@ const Login = () => {
       if (response.status === 201) {
         dispatch(addUser(response.data.user));
         setCookie("userData", JSON.stringify(response.data?.user), 2); //Setting cookie
-        toast.success("Logged In");
+        toast.success(response?.data?.message);
         navigate("/");
       }
     } catch (error) {

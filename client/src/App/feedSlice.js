@@ -10,7 +10,7 @@ export const initialState = {
 
 export const getAllFeeds = createAsyncThunk("getAllFeeds", async () => {
   const response = await axios.get(API_FEEDPOST);
-  return response.data.feedPosts;
+  return response.data.sortedPost;
 });
 
 export const feedPostSlice = createSlice({

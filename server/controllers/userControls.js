@@ -33,10 +33,15 @@ export const signup = async (req, res) => {
         httpOnly: true,
       })
       .status(201)
-      .json({ success: true, authToken, user });
+      .json({
+        success: true,
+        authToken,
+        user,
+        message: "Registered Successfully",
+      });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -60,31 +65,35 @@ export const login = async (req, res) => {
         httpOnly: true,
       })
       .status(201)
-      .json({ success: true, authToken, user });
+      .json({ success: true, authToken, user, message: "Logged In" });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
+export const logout = (req, res) => {
+  return res
+    .status(200)
+    .cookie("token", "", { expiresIn: new Date(Date.now()) })
+    .json({
+      message: "user logged out successfully.",
+      success: true,
+    });
+};
+
 export const updateProfile = async (req, res) => {
-  const { name, username, email, password, skills } = req.body;
+  const { name, username, email } = req.body;
 
   try {
     let user = await User.findOne({ email });
 
     if (!user) return res.status(401).json({ error: "Email does not Exist!!" });
 
-    // Check if the username is being updated and if it already exists
     if (username !== user.username) {
       const existingUsername = await User.findOne({ username });
       if (existingUsername)
         return res.status(400).json({ error: "Username already exists" });
-    }
-    // Hash the password only if it's being updated
-    let hashedPassword = user.password;
-    if (password) {
-      hashedPassword = await bcrypt.hash(password, 10);
     }
 
     await User.findOneAndUpdate(
@@ -92,16 +101,18 @@ export const updateProfile = async (req, res) => {
       {
         name,
         username,
-        password: hashedPassword,
-        skills,
       },
       { new: true }
     );
 
-    return res.status(201).json({ success: true, message: "Profile Updated" });
+    user = await User.findOne({ email });
+
+    return res
+      .status(201)
+      .json({ success: true, message: "Profile Updated", user });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -128,7 +139,7 @@ export const guest = async (req, res) => {
       .json({ success: true, authToken });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -137,19 +148,62 @@ export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find();
     const newUsers = users.filter((user) => user._id.toString() !== id);
-    return res.status(201).json({ success: true, newUsers });
+    return res.status(200).json({ success: true, newUsers });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
+
 export const addConnection = async (req, res) => {
-  const userId = "661f68712c7424bfac286125";
-  const connectedUserId = "6617e3c106d4310de6edcb83"; // Replace with actual user ID
-  const user = await User.findById(userId);
-  user.connections.push(connectedUserId);
-  await user.save();
-  const newUser = await User.findById(userId);
-  console.log(newUser);
-  return res.send("hii");
+  const { userId, secondUserId } = req.body;
+
+  try {
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $push: { connections: secondUserId } },
+      { new: true }
+    );
+    if (!user) return res.status(404).json({ error: "Unable To Add" });
+    return res.status(201).json({ success: true, message: "Connection Added" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const addSkills = async (req, res) => {
+  const { userId, skills } = req.body;
+  try {
+    let user = await User.findByIdAndUpdate(userId, { skills }, { new: true });
+
+    if (!user) return res.status(404).json({ error: "Unable To Add" });
+
+    user = await User.findById(userId);
+
+    return res
+      .status(201)
+      .json({ success: true, message: "Skills are Added", user });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const uploadAvatar = async (req, res) => {
+  const { image, userId } = req.body;
+  try {
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { avatar: image },
+      { new: true }
+    );
+    if (!user) return res.status(404).json({ error: "Unable to Update" });
+    return res
+      .status(200)
+      .json({ success: true, message: "Avatar Updated", user });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
 };
