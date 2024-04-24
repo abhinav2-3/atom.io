@@ -5,14 +5,14 @@ import { RxCross2 } from "react-icons/rx";
 import { API_ADDSKILLS } from "../Utils/APIs";
 import authError from "../Utils/AuthError";
 import toast from "react-hot-toast";
-import useCookie from "../Hooks/useCookie";
+import { useDispatch } from "react-redux";
+import { fetchUser } from "../App/userSlice";
 
 const SkillsModal = ({ closeModal, userId, skills }) => {
   const [input, setInput] = useState("");
   const [selectedSkill, setSelectedSkills] = useState([]);
-
   const inputRef = useRef(null);
-  const { setCookie } = useCookie();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setSelectedSkills(skills);
@@ -28,8 +28,6 @@ const SkillsModal = ({ closeModal, userId, skills }) => {
   const handleRemoveSkill = (data) => {
     const updatedSkills = selectedSkill.filter((currEle) => currEle !== data);
     setSelectedSkills(updatedSkills);
-
-    console.log(updatedSkills, selectedSkill);
   };
 
   const submitSkills = async () => {
@@ -40,7 +38,7 @@ const SkillsModal = ({ closeModal, userId, skills }) => {
       });
       if (response.status === 201) {
         toast.success(response.data.message);
-        setCookie("userData", JSON.stringify(response.data?.user), 2);
+        dispatch(fetchUser());
         closeModal(false);
       }
     } catch (error) {

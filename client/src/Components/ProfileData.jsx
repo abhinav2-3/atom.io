@@ -1,11 +1,8 @@
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { FaHeart, FaBookmark } from "react-icons/fa";
-import useCookie from "../Hooks/useCookie";
 
-const ProfileData = () => {
-  const { getCookie } = useCookie();
-  const user = getCookie("userData");
-
+const ProfileData = ({ user }) => {
   return (
     <section className="flex justify-around items-center py-2">
       <div>
@@ -41,6 +38,10 @@ const ProfileData = () => {
       </div>
     </section>
   );
+};
+
+ProfileData.propTypes = {
+  user: PropTypes.object,
 };
 
 export default ProfileData;

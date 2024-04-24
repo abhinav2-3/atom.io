@@ -1,22 +1,19 @@
 import axios from "axios";
 import { useState } from "react";
 import { API_CREATEPOST } from "../Utils/APIs";
-import useCookie from "../Hooks/useCookie";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllFeeds } from "../App/feedSlice";
 import toast from "react-hot-toast";
 import authError from "../Utils/AuthError";
 import { useNavigate } from "react-router-dom";
+import { fetchUserFeed } from "../App/userSlice";
 
 const CreatePost = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const { getCookie } = useCookie();
-  const user = getCookie("userData");
-
   const [char, setChar] = useState(0);
   const [post, setPost] = useState("");
+  const user = useSelector((state) => state.user.userProfile);
 
   const inputHandler = (e) => {
     setPost(e.target.value);
@@ -33,11 +30,11 @@ const CreatePost = () => {
       if (response.status === 201) {
         toast.success("Post Created");
         dispatch(getAllFeeds());
+        dispatch(fetchUserFeed());
         setPost("");
         navigate("/");
       }
     } catch (error) {
-      console.log(error);
       authError(error);
     }
   };

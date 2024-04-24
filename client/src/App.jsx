@@ -13,12 +13,15 @@ import { useDispatch } from "react-redux";
 import { getAllFeeds } from "./App/feedSlice";
 import UserList from "./Components/UserList";
 import PrivateComponents from "./Utils/PrivateComponents";
+import { fetchUser, fetchUserFeed } from "./App/userSlice";
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllFeeds());
+    dispatch(fetchUserFeed());
+    dispatch(fetchUser());
   }, [dispatch]);
 
   return (

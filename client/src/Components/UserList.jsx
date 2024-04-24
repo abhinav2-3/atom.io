@@ -3,15 +3,15 @@ import axios from "axios";
 import UserCard from "./UserCard";
 import { API_GETUSERS } from "../Utils/APIs";
 import authError from "../Utils/AuthError";
-import useCookie from "../Hooks/useCookie";
 import Loader from "./Loader";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser } from "../App/userSlice";
 
 const UserList = () => {
   const [usersList, setUsersList] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  const { getCookie, setCookie } = useCookie();
-  const user = getCookie("userData");
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.userProfile);
 
   useEffect(() => {
     const getUsers = async () => {
@@ -20,29 +20,29 @@ const UserList = () => {
         const response = await axios.post(API_GETUSERS, { id: user?._id });
         if (response.status === 200) {
           setUsersList(response?.data?.newUsers);
-          setCookie("userData", JSON.stringify(response?.data?.newUsers), 2);
+          dispatch(fetchUser());
           setLoading(false);
         }
       } catch (error) {
-        console.log(error);
         authError(error);
       }
     };
     getUsers();
-  }, [user._id]);
+  }, []);
 
   return (
     <section className="h-[84vh] py-5 px-16 flex flex-col gap-8">
       {loading ? (
         <Loader />
       ) : (
-        usersList?.map((user) => {
+        usersList?.map((data) => {
           return (
             <UserCard
-              key={user._id}
-              name={user.name}
-              username={user.username}
-              id={user._id}
+              key={data._id}
+              name={data.name}
+              username={data.username}
+              id={data._id}
+              userId={user._id}
             />
           );
         })

@@ -4,27 +4,23 @@ import { TiUserAdd } from "react-icons/ti";
 import { API_ADDCONNECTION } from "../Utils/APIs";
 import toast from "react-hot-toast";
 import authError from "../Utils/AuthError";
-import useCookie from "../Hooks/useCookie";
 import { useState } from "react";
 
-const UserCard = ({ name, username, id }) => {
+const UserCard = ({ name, username, id, userId }) => {
   const [isConnected, setConnected] = useState(false);
-
-  const { getCookie } = useCookie();
-  const user = getCookie("userData");
 
   const addConnection = async (secondUserId) => {
     try {
       const response = await axios.post(API_ADDCONNECTION, {
-        userId: user?._id,
+        userId,
         secondUserId,
       });
       if (response.status === 201) {
         toast.success(response.data.message);
+
         setConnected(true);
       }
     } catch (error) {
-      console.log(error);
       authError(error);
     }
   };
@@ -56,6 +52,7 @@ UserCard.propTypes = {
   name: PropTypes.string,
   username: PropTypes.string,
   id: PropTypes.string,
+  userId: PropTypes.string,
 };
 
 export default UserCard;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
@@ -7,24 +7,17 @@ import useCookie from "../Hooks/useCookie";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { API_LOGIN } from "../Utils/APIs";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../App/userSlice";
 
 const Login = () => {
-  const [userData, setUserData] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const { setCookie, getCookie } = useCookie();
-  const cookie = getCookie("userData");
-
+  const { setCookie } = useCookie();
   const [showPassword, setShowPassword] = useState(false);
 
-  useEffect(() => {
-    setUserData(cookie);
-  }, []);
-
-  userData && navigate("/");
+  const user = useSelector((state) => state.user.userProfile);
+  user && navigate("/");
 
   const [formData, setFormData] = useState({
     username: "",
@@ -36,8 +29,8 @@ const Login = () => {
     try {
       const response = await axios.post(API_LOGIN, formData);
       if (response.status === 201) {
-        dispatch(addUser(response.data.user));
-        setCookie("userData", JSON.stringify(response.data?.user), 2); //Setting cookie
+        dispatch(addUser(response?.data?.user));
+        setCookie("userData", JSON.stringify(response.data?.user?._id), 2);
         toast.success(response?.data?.message);
         navigate("/");
       }
@@ -56,9 +49,9 @@ const Login = () => {
   };
 
   return (
-    <div className="w-screen h-svh bg-p_black text-white p-8 ">
+    <div className="w-full h-[84vh] bg-p_black text-white p-8 ">
       <h1 className="px-14 text-2xl font-bold text-center my-8">
-        Welcome to Developers Community.
+        Welcome again to Developers Community.
       </h1>
       <div className="flex gap-5 w-full items-center">
         <figure className="w-1/2 justify-center h-full hidden md:flex">
@@ -69,7 +62,7 @@ const Login = () => {
           />
         </figure>
         <form
-          onSubmit={(e) => handleSubmit(e)}
+          onSubmit={handleSubmit}
           className="p-4 md:w-1/2 w-full flex gap-5 flex-col items-center justify-center"
         >
           <div className="flex flex-col items-start w-2/3">
@@ -113,7 +106,7 @@ const Login = () => {
             Login
           </button>
           <span className="ml-16">
-            Already Registered ?
+            New User ?
             <Link
               to="/signup"
               className="text-p_Blue ml-2 hover:text-s_blue duration-200"

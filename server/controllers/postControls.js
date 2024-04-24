@@ -42,7 +42,7 @@ export const userPost = async (req, res) => {
       postedBy: id,
     });
 
-    return res.status(201).json({ success: true, posts });
+    return res.status(200).json({ success: true, posts });
   } catch (error) {
     handlerErrors(error, res, 500, "Internal Server Error");
   }
@@ -98,7 +98,7 @@ export const deletePost = async (req, res) => {
         .json({ error: "Post is not avialable of this ID" });
 
     await Post.findByIdAndDelete({ _id: id });
-    return res.status(201).json({ success: true });
+    return res.status(201).json({ success: true, message: "Post Deleted" });
   } catch (error) {
     handlerErrors(error, res, 500, "Internal Server Error");
   }

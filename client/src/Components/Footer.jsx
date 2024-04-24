@@ -1,20 +1,42 @@
 import { IoMdHome } from "react-icons/io";
 import { FiPlusSquare } from "react-icons/fi";
-import { FaUserCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { FaUserCircle, FaRegUserCircle } from "react-icons/fa";
+import { IoHomeOutline } from "react-icons/io5";
+import { FaSquarePlus } from "react-icons/fa6";
+import { Link, useLocation } from "react-router-dom";
 
 const Footer = () => {
+  const location = useLocation();
+  const path = location.pathname;
   return (
     <footer className="w-full bg-p_black flex py-4 px-8 border-t justify-between fixed">
-      <Link to={"/"}>
-        <IoMdHome size={26} />
-      </Link>
-      <Link to={"/createpost"}>
-        <FiPlusSquare size={26} />
-      </Link>
-      <Link to={"/youraccount"}>
-        <FaUserCircle size={26} />
-      </Link>
+      {path === "/" ? (
+        <Link to={"/"}>
+          <IoMdHome size={26} />
+        </Link>
+      ) : (
+        <Link to={"/"}>
+          <IoHomeOutline size={26} />
+        </Link>
+      )}
+      {path === "/createpost" ? (
+        <Link to={"/createpost"}>
+          <FaSquarePlus size={26} />
+        </Link>
+      ) : (
+        <Link to={"/createpost"}>
+          <FiPlusSquare size={26} />
+        </Link>
+      )}
+      {path === "/youraccount" ? (
+        <Link to={"/youraccount"}>
+          <FaUserCircle size={26} />
+        </Link>
+      ) : (
+        <Link to={"/youraccount"}>
+          <FaRegUserCircle size={26} />
+        </Link>
+      )}
     </footer>
   );
 };

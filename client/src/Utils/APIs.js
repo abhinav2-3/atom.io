@@ -3,6 +3,7 @@ const URL = "http://localhost:8000/api/";
 // APIs for Users
 export const API_SIGNUP = URL + "signup";
 export const API_LOGIN = URL + "login";
+export const API_ACTIVEUSER = URL + "getactiveuser";
 export const API_GETUSERS = URL + "getusers";
 export const API_ADDCONNECTION = URL + "addconnection";
 export const API_UPDATE_USERPROFILE = URL + "updateprofile";

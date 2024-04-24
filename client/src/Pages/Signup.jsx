@@ -12,7 +12,7 @@ import { addUser } from "../App/userSlice";
 
 const Signup = () => {
   const navigate = useNavigate();
-  const disptach = useDispatch();
+  const dispatch = useDispatch();
   const { setCookie } = useCookie();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -27,11 +27,10 @@ const Signup = () => {
     try {
       const response = await axios.post(API_SIGNUP, formData);
       if (response.status === 201) {
-        console.log(response);
         navigate("/");
-        disptach(addUser(response?.data?.user));
-        setCookie("userData", JSON.stringify(response.data?.user), 2); //Setting cookie
-        toast.success("Registered Successfully");
+        dispatch(addUser(response?.data?.user));
+        setCookie("userData", JSON.stringify(response.data?.user?._id), 2);
+        toast.success(response.data.message);
       }
     } catch (error) {
       console.log(error);

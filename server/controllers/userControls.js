@@ -154,6 +154,16 @@ export const getAllUsers = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+export const getActiveUser = async (req, res) => {
+  const { id } = req.body;
+  try {
+    const user = await User.findById(id);
+    return res.status(200).json({ success: true, user });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
 
 export const addConnection = async (req, res) => {
   const { userId, secondUserId } = req.body;
