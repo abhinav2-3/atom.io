@@ -6,6 +6,7 @@ export const API_LOGIN = URL + "login";
 export const API_ACTIVEUSER = URL + "getactiveuser";
 export const API_GETUSERS = URL + "getusers";
 export const API_ADDCONNECTION = URL + "addconnection";
+export const API_REMOVE_CONNECTION = URL + "removeconnection";
 export const API_UPDATE_USERPROFILE = URL + "updateprofile";
 export const API_ADDSKILLS = URL + "addskills";
 export const API_UPDATE_AVATAR = URL + "changeavatar";

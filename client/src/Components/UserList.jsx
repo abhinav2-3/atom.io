@@ -28,7 +28,7 @@ const UserList = () => {
       }
     };
     getUsers();
-  }, []);
+  }, [dispatch, user?._id]);
 
   return (
     <section className="h-[84vh] py-5 px-16 flex flex-col gap-8">
@@ -42,7 +42,7 @@ const UserList = () => {
               name={data.name}
               username={data.username}
               id={data._id}
-              userId={user._id}
+              user={user}
             />
           );
         })

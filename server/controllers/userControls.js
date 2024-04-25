@@ -174,8 +174,29 @@ export const addConnection = async (req, res) => {
       { $push: { connections: secondUserId } },
       { new: true }
     );
+    await User.findByIdAndUpdate(
+      secondUserId,
+      { $addToSet: { connections: userId } },
+      { new: true }
+    );
     if (!user) return res.status(404).json({ error: "Unable To Add" });
     return res.status(201).json({ success: true, message: "Connection Added" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+export const removeConnection = async (req, res) => {
+  const { userId, secondUserId } = req.body;
+
+  try {
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $pull: { connections: secondUserId } },
+      { new: true }
+    );
+    if (!user) return res.status(404).json({ error: "Unable To Disconnect" });
+    return res.status(201).json({ success: true, message: "Disconnected" });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "Internal server error" });

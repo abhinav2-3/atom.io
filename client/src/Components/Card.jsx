@@ -1,13 +1,15 @@
 import PropTypes from "prop-types";
-import PostButtons from "./PostButtons";
 import axios from "axios";
 import { API_UPDATEPOST } from "../Utils/APIs";
 import toast from "react-hot-toast";
 import authError from "../Utils/AuthError";
 import { getAllFeeds } from "../App/feedSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import ActionButton from "./ActionButton";
+import { Suspense, lazy, useState } from "react";
+import { fetchUserFeed } from "../App/userSlice";
+import Loader from "./Loader";
+const PostButtons = lazy(() => import("./PostButtons"));
+const ActionButton = lazy(() => import("./ActionButton"));
 
 const Card = (data) => {
   const [isEdit, setIsEdit] = useState(null);
@@ -22,6 +24,7 @@ const Card = (data) => {
       if (response.status === 201) {
         toast.success("Updated");
         dispatch(getAllFeeds());
+        dispatch(fetchUserFeed());
         setIsEdit(false);
       }
     } catch (error) {
@@ -34,13 +37,15 @@ const Card = (data) => {
       <div className="flex justify-between">
         <h1 className="font-bold text-p_Blue">{data.name}</h1>
         {user?._id === data?.postedBy && (
-          <ActionButton
-            postId={data._id}
-            onData={(data) => {
-              setIsEdit(data);
-              console.log(data);
-            }}
-          />
+          <Suspense fallback={<Loader />}>
+            <ActionButton
+              postId={data._id}
+              onData={(data) => {
+                setIsEdit(data);
+                console.log(data);
+              }}
+            />
+          </Suspense>
         )}
       </div>
       <span className="lowercase text-sm text-slate-400">@{data.username}</span>
@@ -64,7 +69,9 @@ const Card = (data) => {
           {data.post}
         </article>
       )}
-      <PostButtons {...data} />
+      <Suspense fallback={<Loader />}>
+        <PostButtons {...data} />
+      </Suspense>
     </div>
   );
 };

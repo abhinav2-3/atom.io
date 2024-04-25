@@ -28,19 +28,28 @@ const PostButtons = (data) => {
   return (
     <div className="flex justify-between pt-2 mt-4">
       <div className="flex flex-col w-10 justify-center items-center">
-        <button onClick={() => likeAndSaveHandle(data._id, "like")}>
+        <button
+          onClick={() => likeAndSaveHandle(data._id, "like")}
+          title="Like"
+        >
           <FaRegHeart size={20} />
         </button>
         <span className="text-sm">{data.likes}</span>
       </div>
       <div className="flex flex-col w-10 justify-center items-center">
-        <button onClick={() => likeAndSaveHandle(data._id, "comment")}>
+        <button
+          onClick={() => likeAndSaveHandle(data._id, "comment")}
+          title="Comment"
+        >
           <BiCommentDetail size={20} />
         </button>
         <span className="text-sm">{data.comments}</span>
       </div>
       <div className="flex flex-col w-10 justify-center items-center">
-        <button onClick={() => likeAndSaveHandle(data._id, "save")}>
+        <button
+          onClick={() => likeAndSaveHandle(data._id, "save")}
+          title="Bookmarks"
+        >
           <FaRegBookmark size={20} />
         </button>
         <span className="text-sm">{data.saved}</span>

@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { API_LOGIN } from "../Utils/APIs";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser } from "../App/userSlice";
+import { fetchUser } from "../App/userSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const Login = () => {
     try {
       const response = await axios.post(API_LOGIN, formData);
       if (response.status === 201) {
-        dispatch(addUser(response?.data?.user));
+        dispatch(fetchUser());
         setCookie("userData", JSON.stringify(response.data?.user?._id), 2);
         toast.success(response?.data?.message);
         navigate("/");

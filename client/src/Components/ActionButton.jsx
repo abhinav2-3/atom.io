@@ -36,7 +36,7 @@ const ActionButton = ({ postId, onData }) => {
 
   return (
     <div className="relative inline-block">
-      <button onClick={toggleOptions}>
+      <button onClick={toggleOptions} title="Edit Post">
         <BsThreeDotsVertical size={22} />
       </button>
       {showOptions && (

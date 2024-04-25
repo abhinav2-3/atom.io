@@ -13,12 +13,14 @@ const ProfilePicture = ({ user, edit, setEdit }) => {
   const disptach = useDispatch();
   const { setCookie } = useCookie();
   const [image, setImage] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
-    setImage(user?.avatar);
+    user?.avatar && setImage(user?.avatar);
   }, []);
 
   const convertToBase64 = (e) => {
+    setUploading(true);
     const reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
     reader.onload = () => {
@@ -27,9 +29,11 @@ const ProfilePicture = ({ user, edit, setEdit }) => {
     reader.onerror = (error) => {
       console.log("Error", error);
     };
+    setUploading(false);
   };
 
   const updateAvatar = async () => {
+    setUploading(true);
     try {
       const response = await axios.put(API_UPDATE_AVATAR, {
         image,
@@ -40,6 +44,7 @@ const ProfilePicture = ({ user, edit, setEdit }) => {
         disptach(fetchUser());
         setCookie("userData", JSON.stringify(response.data?.user), 2);
         setEdit(false);
+        setUploading(false);
       }
     } catch (error) {
       authError(error);
@@ -71,12 +76,18 @@ const ProfilePicture = ({ user, edit, setEdit }) => {
             />
             <div className="text-p_Blue font-semibol">Select Pic</div>
           </label>
-          <button
-            className=" bg-white text-p_Blue border border-p_Blue hover:border-p_Blue/70 rounded-md py-1 px-2 hover:bg-p_Blue hover:text-white duration-200"
-            onClick={updateAvatar}
-          >
-            Upload
-          </button>
+          {uploading ? (
+            <button className=" bg-white text-p_Blue border border-p_Blue hover:border-p_Blue/70 rounded-md py-1 px-2 hover:bg-p_Blue hover:text-white duration-200 pointer-events-none">
+              Uploading...
+            </button>
+          ) : (
+            <button
+              className=" bg-white text-p_Blue border border-p_Blue hover:border-p_Blue/70 rounded-md py-1 px-2 hover:bg-p_Blue hover:text-white duration-200"
+              onClick={updateAvatar}
+            >
+              Upload
+            </button>
+          )}
         </>
       )}
     </div>

@@ -11,29 +11,29 @@ const Footer = () => {
   return (
     <footer className="w-full bg-p_black flex py-4 px-8 border-t justify-between fixed">
       {path === "/" ? (
-        <Link to={"/"}>
+        <Link to={"/"} title="Home">
           <IoMdHome size={26} />
         </Link>
       ) : (
-        <Link to={"/"}>
+        <Link to={"/"} title="Home">
           <IoHomeOutline size={26} />
         </Link>
       )}
       {path === "/createpost" ? (
-        <Link to={"/createpost"}>
+        <Link to={"/createpost"} title="Create a Post">
           <FaSquarePlus size={26} />
         </Link>
       ) : (
-        <Link to={"/createpost"}>
+        <Link to={"/createpost"} title="Create a Post">
           <FiPlusSquare size={26} />
         </Link>
       )}
       {path === "/youraccount" ? (
-        <Link to={"/youraccount"}>
+        <Link to={"/youraccount"} title="Your Account">
           <FaUserCircle size={26} />
         </Link>
       ) : (
-        <Link to={"/youraccount"}>
+        <Link to={"/youraccount"} title="Your Account">
           <FaRegUserCircle size={26} />
         </Link>
       )}
