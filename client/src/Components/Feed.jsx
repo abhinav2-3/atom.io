@@ -2,10 +2,13 @@ import Card from "../Components/Card";
 import { useSelector } from "react-redux";
 import Error from "./Error";
 import Loader from "./Loader";
+// import { useEffect, useState } from "react";
 
 const Feed = () => {
   const feeds = useSelector((state) => state.feed.feeds);
   const status = useSelector((state) => state.feed.status);
+
+  const sortedFeed = [...feeds].sort((a, b) => b.createdAt - a.createdAt);
 
   return (
     <>
@@ -15,7 +18,7 @@ const Feed = () => {
         <Error />
       ) : (
         <div className="p-4 px-8 h-[84vh] overflow-y-auto feed">
-          {feeds?.map((data) => (
+          {sortedFeed?.map((data) => (
             <Card key={data._id} {...data} />
           ))}
         </div>

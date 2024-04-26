@@ -61,27 +61,22 @@ export const feed = async (req, res) => {
 };
 
 export const likeAndSaved = async (req, res) => {
-  const { postId, button } = req.body;
-  let updateField = {};
+  const { postId, button, userId } = req.body;
+  const actionMap = {
+    like: { $addToSet: { likes: userId } },
+    save: { $addToSet: { saved: userId } },
+    dislike: { $pull: { likes: userId } },
+    unsave: { $pull: { saved: userId } },
+    default: { $inc: { comments: 1 } }, // Increment comments count for other actions
+  };
 
-  switch (button) {
-    case "like":
-      updateField = { likes: 1 };
-      break;
-    case "save":
-      updateField = { saved: 1 };
-      break;
-    default:
-      updateField = { comments: 1 };
-      break;
-  }
+  // Get the update operation based on the button action
+  const updateField = actionMap[button] || actionMap.default;
 
   try {
-    const updatedPost = await Post.findByIdAndUpdate(
-      postId,
-      { $inc: updateField },
-      { new: true }
-    );
+    const updatedPost = await Post.findByIdAndUpdate(postId, updateField, {
+      new: true,
+    });
     return res.status(201).json({ success: true, updatedPost });
   } catch (error) {
     handlerErrors(error, res, 500, "Internal Server Error");

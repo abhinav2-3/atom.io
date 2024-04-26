@@ -13,6 +13,6 @@ export const postRouter = express.Router();
 postRouter.post("/createpost", createPost);
 postRouter.get("/feedposts", feed);
 postRouter.post("/userposts", userPost);
-postRouter.post("/updateinteraction", likeAndSaved);
+postRouter.put("/updateinteraction", likeAndSaved);
 postRouter.post("/deletepost", deletePost);
 postRouter.put("/updatepost", updatePost);

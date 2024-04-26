@@ -7,7 +7,7 @@ import authError from "../Utils/AuthError";
 import { useDispatch } from "react-redux";
 import { fetchUser } from "../App/userSlice";
 
-const UserCard = ({ name, username, id, user }) => {
+const UserCard = ({ name, username, id, avatar, user }) => {
   const dispatch = useDispatch();
   const addConnection = async (secondUserId) => {
     try {
@@ -60,7 +60,9 @@ const UserCard = ({ name, username, id, user }) => {
           </button>
         )}
       </aside>
-      <figure className="rounded-full w-20 h-20 p-1 border"></figure>
+      <figure className="rounded-full w-20 h-20 p-1 border">
+        <img src={avatar} alt="Avatar" />
+      </figure>
     </div>
   );
 };
@@ -69,6 +71,7 @@ UserCard.propTypes = {
   name: PropTypes.string,
   username: PropTypes.string,
   id: PropTypes.string,
+  avatar: PropTypes.string,
   user: PropTypes.object,
 };
 

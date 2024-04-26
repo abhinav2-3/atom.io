@@ -1,4 +1,5 @@
-import { FaRegHeart, FaRegBookmark } from "react-icons/fa";
+import PropTypes from "prop-types";
+import { FaRegHeart, FaHeart, FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { BiCommentDetail } from "react-icons/bi";
 import axios from "axios";
 import { API_UPDATEPOST_ACTIVITY } from "../Utils/APIs";
@@ -6,18 +7,21 @@ import toast from "react-hot-toast";
 import { getAllFeeds } from "../App/feedSlice";
 import { useDispatch } from "react-redux";
 import authError from "../Utils/AuthError";
+import { fetchUserFeed } from "../App/userSlice";
 
-const PostButtons = (data) => {
+const PostButtons = ({ data, userId }) => {
   const dispatch = useDispatch();
   const likeAndSaveHandle = async (postId, button) => {
+    console.log(userId);
     try {
-      const response = await axios.post(API_UPDATEPOST_ACTIVITY, {
+      const response = await axios.put(API_UPDATEPOST_ACTIVITY, {
         postId,
         button,
+        userId,
       });
-      console.log(response);
       if (response.status === 201) {
         dispatch(getAllFeeds());
+        dispatch(fetchUserFeed());
         toast.success("Post Liked");
       }
     } catch (error) {
@@ -29,12 +33,21 @@ const PostButtons = (data) => {
     <div className="flex justify-between pt-2 mt-4">
       <div className="flex flex-col w-10 justify-center items-center">
         <button
-          onClick={() => likeAndSaveHandle(data._id, "like")}
+          onClick={() =>
+            likeAndSaveHandle(
+              data._id,
+              `${data?.likes?.includes(userId) ? "dislike" : "like"}`
+            )
+          }
           title="Like"
         >
-          <FaRegHeart size={20} />
+          {data?.likes?.includes(userId) ? (
+            <FaHeart size={20} />
+          ) : (
+            <FaRegHeart size={20} />
+          )}
         </button>
-        <span className="text-sm">{data.likes}</span>
+        <span className="text-sm">{data.likes.length}</span>
       </div>
       <div className="flex flex-col w-10 justify-center items-center">
         <button
@@ -47,15 +60,29 @@ const PostButtons = (data) => {
       </div>
       <div className="flex flex-col w-10 justify-center items-center">
         <button
-          onClick={() => likeAndSaveHandle(data._id, "save")}
-          title="Bookmarks"
+          onClick={() =>
+            likeAndSaveHandle(
+              data._id,
+              `${data?.saved?.includes(userId) ? "unsave" : "save"}`
+            )
+          }
+          title="Bookmark"
         >
-          <FaRegBookmark size={20} />
+          {data?.saved?.includes(userId) ? (
+            <FaBookmark size={20} />
+          ) : (
+            <FaRegBookmark size={20} />
+          )}
         </button>
-        <span className="text-sm">{data.saved}</span>
+        <span className="text-sm">{data.saved.length}</span>
       </div>
     </div>
   );
+};
+
+PostButtons.propTypes = {
+  data: PropTypes.object,
+  userId: PropTypes.string,
 };
 
 export default PostButtons;

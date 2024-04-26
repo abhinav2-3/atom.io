@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
+    "deploy": "echo 'Deploying project...'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Abhinav",

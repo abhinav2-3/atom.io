@@ -70,7 +70,7 @@ const Card = (data) => {
         </article>
       )}
       <Suspense fallback={<Loader />}>
-        <PostButtons {...data} />
+        <PostButtons data={data} userId={user?._id} />
       </Suspense>
     </div>
   );

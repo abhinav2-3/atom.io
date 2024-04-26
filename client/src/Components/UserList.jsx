@@ -42,6 +42,7 @@ const UserList = () => {
               name={data.name}
               username={data.username}
               id={data._id}
+              avatar={data?.avatar}
               user={user}
             />
           );
