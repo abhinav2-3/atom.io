@@ -1,4 +1,4 @@
-const URL = "http://localhost:8000/api/";
+const URL = "http://localhost:8000/api/ || https://atom-io.onrender.com/";
 
 // APIs for Users
 export const API_SIGNUP = URL + "signup";
