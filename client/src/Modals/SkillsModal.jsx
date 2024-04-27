@@ -10,6 +10,7 @@ import { fetchUser } from "../App/userSlice";
 
 const SkillsModal = ({ closeModal, userId, skills }) => {
   const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
   const [selectedSkill, setSelectedSkills] = useState([]);
   const inputRef = useRef(null);
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ const SkillsModal = ({ closeModal, userId, skills }) => {
   };
 
   const submitSkills = async () => {
+    setLoading(true);
     try {
       const response = await axios.put(API_ADDSKILLS, {
         userId,
@@ -41,6 +43,7 @@ const SkillsModal = ({ closeModal, userId, skills }) => {
         dispatch(fetchUser());
         closeModal(false);
       }
+      setLoading(false);
     } catch (error) {
       authError(error);
     }
@@ -98,7 +101,7 @@ const SkillsModal = ({ closeModal, userId, skills }) => {
             onClick={submitSkills}
             className="bg-s_blue px-4 py-2 rounded"
           >
-            Finish
+            {loading ? "Submiting..." : "Submit"}
           </button>
         </form>
       </div>

@@ -29,13 +29,12 @@ const Login = () => {
     try {
       const response = await axios.post(API_LOGIN, formData);
       if (response.status === 201) {
-        dispatch(fetchUser());
         setCookie("userData", JSON.stringify(response.data?.user?._id), 2);
+        dispatch(fetchUser());
         toast.success(response?.data?.message);
         navigate("/");
       }
     } catch (error) {
-      console.log(error);
       authError(error);
     }
   };

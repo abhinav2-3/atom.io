@@ -54,7 +54,7 @@ const ProfilePicture = ({ user, edit, setEdit }) => {
   return (
     <div className="w-full flex justify-center items-center flex-col gap-2">
       <figure className="w-20 h-20 border overflow-hidden rounded-full p-1">
-        {image === "" || image === null ? (
+        {image === "" || image === null || image === undefined ? (
           <FaUserCircle className="w-full h-full" />
         ) : (
           <img

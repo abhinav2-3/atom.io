@@ -9,6 +9,7 @@ import { fetchUser } from "../App/userSlice";
 
 const UserCard = ({ name, username, id, avatar, user }) => {
   const dispatch = useDispatch();
+
   const addConnection = async (secondUserId) => {
     try {
       const response = await axios.post(API_ADDCONNECTION, {
@@ -60,8 +61,8 @@ const UserCard = ({ name, username, id, avatar, user }) => {
           </button>
         )}
       </aside>
-      <figure className="rounded-full w-20 h-20 p-1 border">
-        <img src={avatar} alt="Avatar" />
+      <figure className="rounded-full w-20 h-20 p-1 border overflow-hidden">
+        <img src={avatar} alt="Avatar" className="object-cover" />
       </figure>
     </div>
   );

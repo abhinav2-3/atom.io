@@ -28,8 +28,8 @@ const Signup = () => {
       const response = await axios.post(API_SIGNUP, formData);
       if (response.status === 201) {
         navigate("/");
-        dispatch(fetchUser());
         setCookie("userData", JSON.stringify(response.data?.user?._id), 2);
+        dispatch(fetchUser());
         toast.success(response.data.message);
       }
     } catch (error) {

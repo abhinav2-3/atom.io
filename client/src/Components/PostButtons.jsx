@@ -12,7 +12,6 @@ import { fetchUserFeed } from "../App/userSlice";
 const PostButtons = ({ data, userId }) => {
   const dispatch = useDispatch();
   const likeAndSaveHandle = async (postId, button) => {
-    console.log(userId);
     try {
       const response = await axios.put(API_UPDATEPOST_ACTIVITY, {
         postId,
@@ -22,7 +21,20 @@ const PostButtons = ({ data, userId }) => {
       if (response.status === 201) {
         dispatch(getAllFeeds());
         dispatch(fetchUserFeed());
-        toast.success("Post Liked");
+        switch (button) {
+          case "like":
+            toast.success("Post Liked");
+            break;
+          case "dislike":
+            toast.success("Post Disliked");
+            break;
+          case "save":
+            toast.success("Post Saved");
+            break;
+          default:
+            toast.success("Post Unsaved");
+            break;
+        }
       }
     } catch (error) {
       authError(error);

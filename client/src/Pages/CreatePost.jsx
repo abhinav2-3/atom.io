@@ -13,6 +13,7 @@ const CreatePost = () => {
   const navigate = useNavigate();
   const [char, setChar] = useState(0);
   const [post, setPost] = useState("");
+  const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.user.userProfile);
 
   const inputHandler = (e) => {
@@ -21,6 +22,7 @@ const CreatePost = () => {
   };
 
   const handlePost = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const response = await axios.post(API_CREATEPOST, {
@@ -34,6 +36,7 @@ const CreatePost = () => {
         setPost("");
         navigate("/");
       }
+      setLoading(false);
     } catch (error) {
       authError(error);
     }
@@ -58,7 +61,7 @@ const CreatePost = () => {
         type="submit"
         className="bg-p_Blue rounded px-10 py-1 mt-2 font-medium hover:bg-p_Blue/45 duration-200"
       >
-        Post
+        {loading ? "Posting..." : "Post"}
       </button>
     </form>
   );
