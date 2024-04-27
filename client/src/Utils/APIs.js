@@ -1,11 +1,11 @@
-let URL;
+let URL = "https://atom-io.onrender.com/api/";
 
-try {
-  fetch("http://localhost:8000/api/");
-  URL = "http://localhost:8000/api/";
-} catch (error) {
-  URL = "https://atom-io.onrender.com/api/";
-}
+// try {
+//   fetch("http://localhost:8000/api/");
+//   URL = "http://localhost:8000/api/";
+// } catch (error) {
+//   URL = "https://atom-io.onrender.com/api/";
+// }
 // APIs for Users
 export const API_SIGNUP = URL + "signup";
 export const API_LOGIN = URL + "login";
