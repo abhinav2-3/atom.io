@@ -64,7 +64,7 @@ export const login = async (req, res) => {
         expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
         httpOnly: true,
       })
-      .status(201)
+      .status(200)
       .json({ success: true, authToken, user, message: "Logged In" });
   } catch (error) {
     console.log(error);

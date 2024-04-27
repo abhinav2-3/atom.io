@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import UserCard from "./UserCard";
+import UserCard from "../Components/UserCard";
 import { API_GETUSERS } from "../Utils/APIs";
 import authError from "../Utils/AuthError";
-import Loader from "./Loader";
+import Loader from "../Components/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "../App/userSlice";
 
@@ -31,7 +31,7 @@ const UserList = () => {
   }, [dispatch, user?._id]);
 
   return (
-    <section className="h-[84vh] py-5 px-16 flex flex-col gap-8">
+    <section className="h-screen py-16 px-16 flex flex-col gap-8">
       {loading ? (
         <Loader />
       ) : (

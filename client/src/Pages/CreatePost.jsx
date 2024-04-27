@@ -1,20 +1,11 @@
-import axios from "axios";
 import { useState } from "react";
-import { API_CREATEPOST } from "../Utils/APIs";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllFeeds } from "../App/feedSlice";
-import toast from "react-hot-toast";
-import authError from "../Utils/AuthError";
-import { useNavigate } from "react-router-dom";
-import { fetchUserFeed } from "../App/userSlice";
+import useAPICalls from "../Hooks/useAPICalls";
 
 const CreatePost = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { handleCreatePost } = useAPICalls();
   const [char, setChar] = useState(0);
   const [post, setPost] = useState("");
   const [loading, setLoading] = useState(false);
-  const user = useSelector((state) => state.user.userProfile);
 
   const inputHandler = (e) => {
     setPost(e.target.value);
@@ -23,28 +14,13 @@ const CreatePost = () => {
 
   const handlePost = async (e) => {
     setLoading(true);
-    e.preventDefault();
-    try {
-      const response = await axios.post(API_CREATEPOST, {
-        username: user?.username,
-        post,
-      });
-      if (response.status === 201) {
-        toast.success("Post Created");
-        dispatch(getAllFeeds());
-        dispatch(fetchUserFeed());
-        setPost("");
-        navigate("/");
-      }
-      setLoading(false);
-    } catch (error) {
-      authError(error);
-    }
+    await handleCreatePost(e, post, setPost);
+    setLoading(false);
   };
   return (
     <form
       onSubmit={handlePost}
-      className="p-4 px-8 h-[84vh] flex flex-col overflow-y-auto feed"
+      className="py-16 px-16 h-screen flex flex-col overflow-y-auto feed"
     >
       <h1 className="text-xl font-bold py-8">Create a New Post</h1>
       <textarea

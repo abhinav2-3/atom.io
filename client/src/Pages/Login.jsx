@@ -1,23 +1,14 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
-import authError from "../Utils/AuthError";
-import useCookie from "../Hooks/useCookie";
-import toast from "react-hot-toast";
-import axios from "axios";
 import { API_LOGIN } from "../Utils/APIs";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUser } from "../App/userSlice";
+import useAPICalls from "../Hooks/useAPICalls";
 
 const Login = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { setCookie } = useCookie();
   const [showPassword, setShowPassword] = useState(false);
-
-  const user = useSelector((state) => state.user.userProfile);
-  user && navigate("/");
+  const [loading, setLoading] = useState(false);
+  const { handleLogin } = useAPICalls();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -25,18 +16,9 @@ const Login = () => {
   });
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(API_LOGIN, formData);
-      if (response.status === 201) {
-        setCookie("userData", JSON.stringify(response.data?.user?._id), 2);
-        dispatch(fetchUser());
-        toast.success(response?.data?.message);
-        navigate("/");
-      }
-    } catch (error) {
-      authError(error);
-    }
+    setLoading(true);
+    await handleLogin(e, formData, API_LOGIN, 200);
+    setLoading(false);
   };
 
   const handleValue = (e) => {
@@ -102,7 +84,7 @@ const Login = () => {
             </div>
           </div>
           <button className="bg-p_Blue mt-4 px-8 py-2 rounded w-2/3 hover:bg-s_blue duration-200 uppercase font-medium text-lg">
-            Login
+            {loading ? "Login..." : "Login"}
           </button>
           <span className="ml-16">
             New User ?

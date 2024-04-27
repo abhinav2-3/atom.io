@@ -1,20 +1,14 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
-import axios from "axios";
 import { API_SIGNUP } from "../Utils/APIs";
-import toast from "react-hot-toast";
-import authError from "../Utils/AuthError";
-import useCookie from "../Hooks/useCookie";
-import { useDispatch } from "react-redux";
-import { fetchUser } from "../App/userSlice";
+import useAPICalls from "../Hooks/useAPICalls";
 
 const Signup = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { setCookie } = useCookie();
+  const { handleLogin } = useAPICalls();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     username: "",
@@ -23,19 +17,9 @@ const Signup = () => {
   });
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(API_SIGNUP, formData);
-      if (response.status === 201) {
-        navigate("/");
-        setCookie("userData", JSON.stringify(response.data?.user?._id), 2);
-        dispatch(fetchUser());
-        toast.success(response.data.message);
-      }
-    } catch (error) {
-      console.log(error);
-      authError(error);
-    }
+    setLoading(true);
+    await handleLogin(e, formData, API_SIGNUP, 201);
+    setLoading(false);
   };
 
   const handleValue = (e) => {
@@ -123,22 +107,11 @@ const Signup = () => {
               )}
             </div>
           </div>
-          {/* <div className="flex flex-col items-start w-2/3">
-            <label className="text-lg font-medium">Skills</label>
-            <input
-              type="text"
-              name="skills"
-              value={formData.skills}
-              placeholder="HTML,CSS"
-              onChange={(e) => handleValue(e)}
-              className="outline-none border rounded py-1 px-4 text-p_black w-full"
-            />
-          </div> */}
           <button
             type="submit"
             className="bg-p_Blue mt-4 px-8 py-2 rounded w-2/3 hover:bg-s_blue duration-200 uppercase font-medium text-lg"
           >
-            Signup
+            {loading ? "Signup..." : "Signup"}
           </button>
           <span className="ml-16 pb-2">
             Already Registered ?{" "}

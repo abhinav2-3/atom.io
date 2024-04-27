@@ -17,7 +17,7 @@ const Feed = () => {
       ) : status === "error" ? (
         <Error />
       ) : (
-        <div className="p-4 px-8 h-[84vh] overflow-y-auto feed">
+        <div className="pt-20 pb-16 px-8 h-screen overflow-y-auto feed">
           {sortedFeed?.map((data) => (
             <Card key={data._id} {...data} />
           ))}

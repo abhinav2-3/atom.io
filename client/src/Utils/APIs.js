@@ -1,7 +1,7 @@
 let URL;
 
 try {
-  await fetch("http://localhost:8000/api/");
+  fetch("http://localhost:8000/api/");
   URL = "http://localhost:8000/api/";
 } catch (error) {
   URL = "https://atom-io.onrender.com/api/";

@@ -2,8 +2,8 @@ import { TiUserAdd } from "react-icons/ti";
 import { Link } from "react-router-dom";
 const Header = () => {
   return (
-    <header className="w-full bg-s_blue p-4 px-8 flex justify-between h-12 items-center shadow-md shadow-white/40">
-      <h3 className="text-2xl font-bold">Dev.io</h3>
+    <header className="w-full bg-s_blue py-2 px-8 flex justify-between items-center z-50 fixed top-0">
+      <h3 className="text-2xl font-bold">Atom.io</h3>
       <Link
         title="Connections List"
         to={"/userslist"}

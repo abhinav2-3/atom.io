@@ -14,8 +14,8 @@ import Loader from "./Components/Loader";
 
 const CreatePost = lazy(() => import("./Pages/CreatePost"));
 const Account = lazy(() => import("./Pages/Account"));
-const EditProfile = lazy(() => import("./Components/EditProfile"));
-const UserList = lazy(() => import("./Components/UserList"));
+const EditProfile = lazy(() => import("./Pages/EditProfile"));
+const UserList = lazy(() => import("./Pages/UserList"));
 
 function App() {
   const dispatch = useDispatch();

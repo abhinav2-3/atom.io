@@ -28,7 +28,7 @@ const DisplayProfile = () => {
           </Suspense>
         </aside>
         <aside className="flex flex-col w-[60%] h-full justify-center ml-20">
-          <h2 className="text-xl font-bold ">{user.name}</h2>
+          <h2 className="text-xl font-bold capitalize">{user.name}</h2>
           <h4 className="text-slate-400">@{user.username}</h4>
           {edit && (
             <Link

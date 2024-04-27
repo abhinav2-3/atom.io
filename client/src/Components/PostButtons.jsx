@@ -1,52 +1,17 @@
 import PropTypes from "prop-types";
 import { FaRegHeart, FaHeart, FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { BiCommentDetail } from "react-icons/bi";
-import axios from "axios";
-import { API_UPDATEPOST_ACTIVITY } from "../Utils/APIs";
-import toast from "react-hot-toast";
-import { getAllFeeds } from "../App/feedSlice";
-import { useDispatch } from "react-redux";
-import authError from "../Utils/AuthError";
-import { fetchUserFeed } from "../App/userSlice";
+import useAPICalls from "../Hooks/useAPICalls";
 
 const PostButtons = ({ data, userId }) => {
-  const dispatch = useDispatch();
-  const likeAndSaveHandle = async (postId, button) => {
-    try {
-      const response = await axios.put(API_UPDATEPOST_ACTIVITY, {
-        postId,
-        button,
-        userId,
-      });
-      if (response.status === 201) {
-        dispatch(getAllFeeds());
-        dispatch(fetchUserFeed());
-        switch (button) {
-          case "like":
-            toast.success("Post Liked");
-            break;
-          case "dislike":
-            toast.success("Post Disliked");
-            break;
-          case "save":
-            toast.success("Post Saved");
-            break;
-          default:
-            toast.success("Post Unsaved");
-            break;
-        }
-      }
-    } catch (error) {
-      authError(error);
-    }
-  };
+  const { handleLikeSave } = useAPICalls();
 
   return (
     <div className="flex justify-between pt-2 mt-4">
       <div className="flex flex-col w-10 justify-center items-center">
         <button
           onClick={() =>
-            likeAndSaveHandle(
+            handleLikeSave(
               data._id,
               `${data?.likes?.includes(userId) ? "dislike" : "like"}`
             )
@@ -63,7 +28,7 @@ const PostButtons = ({ data, userId }) => {
       </div>
       <div className="flex flex-col w-10 justify-center items-center">
         <button
-          onClick={() => likeAndSaveHandle(data._id, "comment")}
+          onClick={() => handleLikeSave(data._id, "comment")}
           title="Comment"
         >
           <BiCommentDetail size={20} />
@@ -73,7 +38,7 @@ const PostButtons = ({ data, userId }) => {
       <div className="flex flex-col w-10 justify-center items-center">
         <button
           onClick={() =>
-            likeAndSaveHandle(
+            handleLikeSave(
               data._id,
               `${data?.saved?.includes(userId) ? "unsave" : "save"}`
             )

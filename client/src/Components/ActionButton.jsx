@@ -25,7 +25,7 @@ const ActionButton = ({ postId, onData }) => {
   const deletePost = async (id) => {
     try {
       const response = await axios.post(API_DELTEPOST, { id });
-      if (response.status === 201) {
+      if (response.status === 200) {
         dispatch(getAllFeeds());
         toast.success("Deleted");
       }

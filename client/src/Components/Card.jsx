@@ -1,35 +1,23 @@
 import PropTypes from "prop-types";
-import axios from "axios";
-import { API_UPDATEPOST } from "../Utils/APIs";
-import toast from "react-hot-toast";
-import authError from "../Utils/AuthError";
-import { getAllFeeds } from "../App/feedSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Suspense, lazy, useState } from "react";
-import { fetchUserFeed } from "../App/userSlice";
 import Loader from "./Loader";
+import useAPICalls from "../Hooks/useAPICalls";
 const PostButtons = lazy(() => import("./PostButtons"));
 const ActionButton = lazy(() => import("./ActionButton"));
 
 const Card = (data) => {
+  const { handlePostUpdate } = useAPICalls();
   const [isEdit, setIsEdit] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [input, setInput] = useState(data.post);
-  const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user.userProfile);
 
   const updateHandle = async (id) => {
-    try {
-      const response = await axios.put(API_UPDATEPOST, { id, input });
-      if (response.status === 201) {
-        toast.success("Updated");
-        dispatch(getAllFeeds());
-        dispatch(fetchUserFeed());
-        setIsEdit(false);
-      }
-    } catch (error) {
-      authError(error);
-    }
+    setLoading(true);
+    await handlePostUpdate(id, input, setIsEdit);
+    setLoading(false);
   };
 
   return (
@@ -42,7 +30,6 @@ const Card = (data) => {
               postId={data._id}
               onData={(data) => {
                 setIsEdit(data);
-                console.log(data);
               }}
             />
           </Suspense>
@@ -61,7 +48,7 @@ const Card = (data) => {
             className="bg-p_Blue px-4 py-1 rounded"
             onClick={() => updateHandle(data._id)}
           >
-            Update
+            {loading ? "Updating..." : "Update"}
           </button>
         </>
       ) : (

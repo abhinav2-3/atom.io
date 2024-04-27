@@ -35,7 +35,7 @@ export const userPost = async (req, res) => {
 
   if (!id) return res.status(400).json({ error: "User detail is not Correct" });
   try {
-    const user = await User.findById({ _id: id });
+    const user = await User.findById(id);
     if (!user) return res.status(401).json({ error: "User Doesn't Exist" });
 
     const posts = await Post.find({
@@ -93,7 +93,7 @@ export const deletePost = async (req, res) => {
         .json({ error: "Post is not avialable of this ID" });
 
     await Post.findByIdAndDelete({ _id: id });
-    return res.status(201).json({ success: true, message: "Post Deleted" });
+    return res.status(200).json({ success: true, message: "Post Deleted" });
   } catch (error) {
     handlerErrors(error, res, 500, "Internal Server Error");
   }
@@ -109,13 +109,13 @@ export const updatePost = async (req, res) => {
         .json({ error: "Post is not avialable of this ID" });
 
     await Post.findByIdAndUpdate(
-      { _id: id },
+      id,
       {
         post: input,
       },
       { new: true }
     );
-    return res.status(201).json({ success: true });
+    return res.status(201).json({ success: true, message: "Post Updated" });
   } catch (error) {
     handlerErrors(error, res, 500, "Internal Server Error");
   }

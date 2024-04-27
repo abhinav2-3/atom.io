@@ -1,22 +1,16 @@
 import { useState } from "react";
-import useCookie from "../Hooks/useCookie";
-import axios from "axios";
-import { API_UPDATE_USERPROFILE } from "../Utils/APIs";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-import authError from "../Utils/AuthError";
+import useAPICalls from "../Hooks/useAPICalls";
+import { useSelector } from "react-redux";
 
 const EditProfile = () => {
-  const { getCookie, setCookie } = useCookie();
-  const navigate = useNavigate();
-
-  const cookie = getCookie("userData");
+  const { handleEditProfile } = useAPICalls();
+  const [loading, setLoading] = useState(false);
+  const user = useSelector((state) => state.user.userProfile);
 
   const [formData, setFormData] = useState({
-    name: cookie.name || "",
-    username: cookie.username || "",
-    email: cookie.email || "",
-    password: cookie.password || "",
+    name: user.name || "",
+    username: user.username || "",
+    email: user.email || "",
   });
 
   const handleValue = (e) => {
@@ -28,23 +22,15 @@ const EditProfile = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.put(API_UPDATE_USERPROFILE, formData);
-      if (response.status === 201) {
-        setCookie("userData", JSON.stringify(response.data?.user), 2);
-        toast.success(response?.data?.message);
-        navigate("/youraccount");
-      }
-    } catch (error) {
-      authError(error);
-    }
+    setLoading(true);
+    handleEditProfile(e, formData);
+    setLoading(false);
   };
 
   return (
     <form
-      onSubmit={(e) => handleSubmit(e)}
-      className="p-4 md:w-1/2 w-full h-[84vh] flex gap-5 flex-col items-center justify-center"
+      onSubmit={handleSubmit}
+      className="p-4 md:w-1/2 w-full h-screen flex gap-5 flex-col items-center justify-center"
     >
       <div className="flex flex-col items-start w-2/3">
         <label className="text-lg font-medium">Name</label>
@@ -74,7 +60,6 @@ const EditProfile = () => {
           type="email"
           name="email"
           defaultValue={formData.email}
-          placeholder="example@gmail.com"
           className="outline-none border rounded py-1 px-4 text-p_black w-full"
         />
       </div>
@@ -82,7 +67,7 @@ const EditProfile = () => {
         type="submit"
         className="bg-p_Blue mt-4 px-8 py-2 rounded w-2/3 hover:bg-s_blue duration-200 uppercase font-medium text-lg"
       >
-        Update
+        {loading ? "Updating..." : "Update"}
       </button>
     </form>
   );
