@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { FaUserEdit } from "react-icons/fa";
+import { CiSettings } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { useEffect, useState, lazy, Suspense } from "react";
 import { useSelector } from "react-redux";
@@ -30,6 +30,9 @@ const DisplayProfile = () => {
         <aside className="flex flex-col w-[60%] h-full justify-center ml-20">
           <h2 className="text-xl font-bold capitalize">{user.name}</h2>
           <h4 className="text-slate-400">@{user.username}</h4>
+          <Link to={"/userslist"} className="text-xl font-bold text-p_Blue">
+            Connections : {user.connections.length}
+          </Link>
           {edit && (
             <Link
               to={"/editProfile"}
@@ -40,11 +43,11 @@ const DisplayProfile = () => {
           )}
         </aside>
         <button
-          className="w-7 right-2 absolute top-0 text-s_blue"
+          className="w-7 right-2 absolute top-0"
           title="Edit"
           onClick={() => setEdit(!edit)}
         >
-          <FaUserEdit size={25} />
+          <CiSettings size={25} />
         </button>
       </div>
       <article className="p-4 flex gap-4 flex-wrap">

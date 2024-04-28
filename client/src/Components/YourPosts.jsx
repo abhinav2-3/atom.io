@@ -11,7 +11,7 @@ const YourPosts = () => {
   }, [data]);
 
   return (
-    <section className="p-4 flex flex-col border-t">
+    <section className="px-4 flex flex-col pb-16">
       <h1 className="text-xl font-bold text-center pb-4">
         Your Posts: {feed.length}
       </h1>

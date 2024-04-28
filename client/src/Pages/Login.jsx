@@ -30,7 +30,7 @@ const Login = () => {
   };
 
   return (
-    <div className="w-full h-[84vh] bg-p_black text-white p-8 ">
+    <div className="w-full h-screen py-16 bg-p_black text-white p-8 ">
       <h1 className="px-14 text-2xl font-bold text-center my-8">
         Welcome again to Developers Community.
       </h1>

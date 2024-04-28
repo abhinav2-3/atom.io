@@ -16,7 +16,7 @@ app.use(cors());
 app.use("/api", router);
 app.use("/api", postRouter);
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8000;
 const URI = process.env.MONGO_URI;
 
 app.get("/", (req, res) => res.send("Abhinav....."));

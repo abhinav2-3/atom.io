@@ -2,7 +2,6 @@ import Card from "../Components/Card";
 import { useSelector } from "react-redux";
 import Error from "./Error";
 import Loader from "./Loader";
-// import { useEffect, useState } from "react";
 
 const Feed = () => {
   const feeds = useSelector((state) => state.feed.feeds);

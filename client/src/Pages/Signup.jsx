@@ -31,7 +31,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="w-full h-[84vh] bg-p_black text-white p-8 ">
+    <div className="w-full h-screen py-16 bg-p_black text-white p-8 ">
       <h1 className="px-14 text-2xl font-bold text-center">
         Welcome to Developers Community.
       </h1>
@@ -45,7 +45,7 @@ const Signup = () => {
         </figure>
         <form
           onSubmit={(e) => handleSubmit(e)}
-          className="p-4 md:w-1/2 w-full flex gap-5 flex-col items-center justify-center"
+          className="p-2 md:w-1/2 w-full flex gap-5 flex-col items-center justify-center"
         >
           <div className="flex flex-col items-start w-2/3">
             <label className="text-lg font-medium">Name</label>
