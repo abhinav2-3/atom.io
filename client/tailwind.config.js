@@ -5,10 +5,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        p_Blue: "#5263EE",
-        p_black: "#0E1A27",
-        p_yellow: "#C2F750V",
-        s_blue: "#3545D6",
+        p_Blue: "#1F2833",
+        p_black: "#0B0C10",
+        p_text: "#FAED26",
+        s_blue: "#17252A",
       },
     },
   },

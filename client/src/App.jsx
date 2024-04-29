@@ -11,6 +11,8 @@ import { getAllFeeds } from "./App/feedSlice";
 import PrivateComponents from "./Utils/PrivateComponents";
 import { fetchUser, fetchUserFeed } from "./App/userSlice";
 import Loader from "./Components/Loader";
+import Message from "./Pages/Message";
+import Bookmarks from "./Pages/Bookmarks";
 
 const CreatePost = lazy(() => import("./Pages/CreatePost"));
 const Account = lazy(() => import("./Pages/Account"));
@@ -27,7 +29,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className="bg-p_black text-white">
+    <div className="bg-p_black text-p_text">
       <Toaster />
       <Router>
         <Suspense fallback={<Loader />}>
@@ -38,6 +40,8 @@ function App() {
               <Route path="/youraccount" element={<Account />} />
               <Route path="/editProfile" element={<EditProfile />} />
               <Route path="/userslist" element={<UserList />} />
+              <Route path="/message" element={<Message />} />
+              <Route path="/bookmarks" element={<Bookmarks />} />
             </Route>
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<Signup />} />

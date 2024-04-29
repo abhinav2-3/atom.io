@@ -20,9 +20,11 @@ const ActionButton = ({ postId, onData }) => {
   const sendData = () => {
     setEdit(!edit);
     onData(edit);
+    setShowOptions(!showOptions);
   };
 
   const deletePost = async (id) => {
+    setShowOptions(!showOptions);
     try {
       const response = await axios.post(API_DELTEPOST, { id });
       if (response.status === 200) {

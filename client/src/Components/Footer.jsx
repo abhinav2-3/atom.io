@@ -9,7 +9,7 @@ const Footer = () => {
   const location = useLocation();
   const path = location.pathname;
   return (
-    <footer className="w-full bg-p_black flex py-4 px-8 border-t justify-between fixed bottom-0">
+    <footer className="w-full md:hidden bg-p_black flex py-4 px-8 border-t justify-between fixed bottom-0">
       {path === "/" ? (
         <Link to={"/"} title="Home">
           <IoMdHome size={26} />

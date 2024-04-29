@@ -21,44 +21,57 @@ const Card = (data) => {
   };
 
   return (
-    <div className="pb-4 flex flex-col px-5 rounded mb-7 tracking-tight overflow-hidden shadow-lg shadow-p_Blue/70">
-      <div className="flex justify-between">
-        <h1 className="font-bold text-p_Blue">{data.name}</h1>
+    <div className="pb-4 flex px-10 rounded mb-7 tracking-tight overflow-hidden shadow-lg shadow-p_Blue/70">
+      <aside className="w-[95%] h-full flex flex-col">
+        <h1 className="font-bold text-white">{data.name}</h1>
+        <span className="lowercase text-sm text-p_text/50">
+          @{data.username}
+        </span>
+        {isEdit ? (
+          <>
+            <input
+              name="post"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              className="my-2 rounded border border-p_Blue p-4 outline-none text-wrap text-justify leading-tight text-ellipsis text-slate-200 bg-transparent"
+            />
+            <div className="w-full gap-8 flex">
+              <button
+                className="hover:bg-p_Blue hover:text-p_text px-4 py-1 w-32 rounded font-semibold bg-p_text text-p_Blue duration-200"
+                onClick={() => updateHandle(data._id)}
+              >
+                {loading ? "Updating..." : "Update"}
+              </button>
+              <button
+                className="bg-p_Blue px-4 py-1 w-32 rounded font-semibold hover:bg-p_text hover:text-p_Blue duration-200"
+                onClick={() => setIsEdit(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </>
+        ) : (
+          <article className="my-2 text-wrap text-justify leading-tight text-ellipsis text-slate-200">
+            {data.post}
+          </article>
+        )}
+        <Suspense fallback={<Loader />}>
+          <PostButtons data={data} userId={user?._id} />
+        </Suspense>
+      </aside>
+      <aside className="w-16">
         {user?._id === data?.postedBy && (
           <Suspense fallback={<Loader />}>
             <ActionButton
               postId={data._id}
               onData={(data) => {
                 setIsEdit(data);
+                console.log(data);
               }}
             />
           </Suspense>
         )}
-      </div>
-      <span className="lowercase text-sm text-slate-400">@{data.username}</span>
-      {isEdit ? (
-        <>
-          <input
-            name="post"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className="my-2 border p-2 text-wrap text-justify leading-tight text-ellipsis text-slate-200 bg-transparent"
-          />
-          <button
-            className="bg-p_Blue px-4 py-1 rounded"
-            onClick={() => updateHandle(data._id)}
-          >
-            {loading ? "Updating..." : "Update"}
-          </button>
-        </>
-      ) : (
-        <article className="my-2 text-wrap text-justify leading-tight text-ellipsis text-slate-200">
-          {data.post}
-        </article>
-      )}
-      <Suspense fallback={<Loader />}>
-        <PostButtons data={data} userId={user?._id} />
-      </Suspense>
+      </aside>
     </div>
   );
 };
