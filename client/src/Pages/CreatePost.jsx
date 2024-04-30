@@ -20,7 +20,7 @@ const CreatePost = () => {
   return (
     <form
       onSubmit={handlePost}
-      className="py-16 px-16 h-screen flex flex-col overflow-y-auto feed"
+      className="py-16 px-16 h-screen w-full md:w-[80%] flex flex-col overflow-y-auto feed"
     >
       <h1 className="text-xl font-bold py-8">Create a New Post</h1>
       <textarea
@@ -28,7 +28,7 @@ const CreatePost = () => {
         rows="4"
         cols="50"
         onChange={(e) => inputHandler(e)}
-        className="w-full h-32 border rounded p-4 bg-transparent outline-none text-slate-400"
+        className="w-full h-32 border border-p_Blue rounded p-4 bg-transparent outline-none text-slate-400"
       />
       <span className="text-right text-sm py-2 text-slate-500">
         Characters : {char}

@@ -77,7 +77,7 @@ export const logout = (req, res) => {
     .status(200)
     .cookie("token", "", { expiresIn: new Date(Date.now()) })
     .json({
-      message: "user logged out successfully.",
+      message: "User logged out successfully.",
       success: true,
     });
 };

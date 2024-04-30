@@ -35,7 +35,6 @@ const useAPICalls = () => {
   };
 
   const handleCreatePost = async (e, post, setPost) => {
-    console.log(post, user?.username);
     e.preventDefault();
     try {
       const response = await axios.post(API_CREATEPOST, {

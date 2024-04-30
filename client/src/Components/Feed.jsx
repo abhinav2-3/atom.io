@@ -17,7 +17,7 @@ const Feed = () => {
       ) : status === "error" ? (
         <Error />
       ) : (
-        <div className="pt-20 pb-16 px-8 border h-screen overflow-y-auto md:w-1/2 feed">
+        <div className="pt-20 pb-16 md:pb-4 lg:px-16 px-8 h-screen w-full overflow-y-auto feed">
           <CreatePost />
           <h1 className="mb-5 text-slate-400 text-lg">Recent Posts</h1>
           {sortedFeed?.map((data) => (

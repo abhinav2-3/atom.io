@@ -31,7 +31,7 @@ const UserList = () => {
   }, [dispatch, user?._id]);
 
   return (
-    <section className="h-screen py-16 px-16 flex flex-col gap-8">
+    <section className="h-screen w-full py-16 md:px-16 px-8 flex flex-col gap-8 overflow-y-auto feed">
       {loading ? (
         <Loader />
       ) : (

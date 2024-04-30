@@ -21,7 +21,7 @@ const Card = (data) => {
   };
 
   return (
-    <div className="pb-4 flex px-10 rounded mb-7 tracking-tight overflow-hidden shadow-lg shadow-p_Blue/70">
+    <div className="py-4 flex px-10 bg-s_blue/30 rounded mb-7 tracking-tight overflow-hidden shadow-md shadow-slate-500">
       <aside className="w-[95%] h-full flex flex-col">
         <h1 className="font-bold text-white">{data.name}</h1>
         <span className="lowercase text-sm text-p_text/50">
@@ -55,6 +55,7 @@ const Card = (data) => {
             {data.post}
           </article>
         )}
+
         <Suspense fallback={<Loader />}>
           <PostButtons data={data} userId={user?._id} />
         </Suspense>

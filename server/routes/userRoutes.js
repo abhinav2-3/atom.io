@@ -6,6 +6,7 @@ import {
   getAllUsers,
   guest,
   login,
+  logout,
   removeConnection,
   signup,
   updateProfile,
@@ -20,6 +21,7 @@ router.put("/updateprofile", updateProfile);
 router.post("/getusers", getAllUsers);
 router.post("/getactiveuser", getActiveUser);
 router.get("/guest", guest);
+router.get("/logout", logout);
 router.post("/addconnection", addConnection);
 router.put("/removeconnection", removeConnection);
 router.put("/addskills", addSkills);

@@ -4,6 +4,9 @@ export default {
   darkMode: "selector",
   theme: {
     extend: {
+      screens: {
+        md2: "810px",
+      },
       colors: {
         p_Blue: "#1F2833",
         p_black: "#0B0C10",

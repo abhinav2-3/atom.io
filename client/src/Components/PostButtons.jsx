@@ -7,7 +7,7 @@ const PostButtons = ({ data, userId }) => {
   const { handleLikeSave } = useAPICalls();
 
   return (
-    <div className="flex justify-between pt-2 mt-4">
+    <div className="flex justify-between pt-2 mt-4 ">
       <div className="flex flex-col w-10 justify-center items-center">
         <button
           onClick={() =>

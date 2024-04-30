@@ -47,6 +47,19 @@ export const userPost = async (req, res) => {
     handlerErrors(error, res, 500, "Internal Server Error");
   }
 };
+export const postById = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id)
+    return res.status(400).json({ error: "Please provide valid post id" });
+  try {
+    const posts = await Post.findById(id);
+    if (!posts) return res.status(401).json({ error: "Post Doesn't Exist" });
+    return res.status(200).json({ success: true, posts });
+  } catch (error) {
+    handlerErrors(error, res, 500, "Internal Server Error");
+  }
+};
 
 export const feed = async (req, res) => {
   try {

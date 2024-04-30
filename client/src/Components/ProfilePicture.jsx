@@ -17,7 +17,7 @@ const ProfilePicture = ({ user, edit, setEdit }) => {
 
   useEffect(() => {
     user?.avatar && setImage(user?.avatar);
-  }, []);
+  }, [user.avatar]);
 
   const convertToBase64 = (e) => {
     setUploading(true);
@@ -74,20 +74,17 @@ const ProfilePicture = ({ user, edit, setEdit }) => {
               type="file"
               onChange={convertToBase64}
             />
-            <div className="text-p_Blue font-semibol">Select Pic</div>
+            <div className="text-white font-semibol">Select Pic</div>
           </label>
-          {uploading ? (
-            <button className=" bg-white text-p_Blue border border-p_Blue hover:border-p_Blue/70 rounded-md py-1 px-2 hover:bg-p_Blue hover:text-white duration-200 pointer-events-none">
-              Uploading...
-            </button>
-          ) : (
-            <button
-              className=" bg-white text-p_Blue border border-p_Blue hover:border-p_Blue/70 rounded-md py-1 px-2 hover:bg-p_Blue hover:text-white duration-200"
-              onClick={updateAvatar}
-            >
-              Upload
-            </button>
-          )}
+
+          <button
+            className={`bg-white text-p_Blue border border-p_Blue hover:border-p_Blue/70 rounded-md py-1 px-2 hover:bg-p_Blue hover:text-white duration-200 ${
+              uploading && "pointer-events-none"
+            }`}
+            onClick={updateAvatar}
+          >
+            {uploading ? "Uploading..." : "Upload"}
+          </button>
         </>
       )}
     </div>

@@ -51,7 +51,7 @@ const SkillsModal = ({ closeModal, userId, skills }) => {
 
   return (
     <div className="fixed z-50 inset-0 w-full bg-p_black bg-opacity-30 backdrop-blur-sm flex items-center justify-center">
-      <div className="bg-p_black px-8 py-4 w-2/3 h-3/5 rounded relative">
+      <div className="bg-p_black px-8 py-4 w-1/2 h-3/5 rounded relative">
         <button
           className="absolute top-3 right-4 bg-white p-1 rounded"
           onClick={() => closeModal(false)}
@@ -66,7 +66,7 @@ const SkillsModal = ({ closeModal, userId, skills }) => {
           className="flex flex-col w-full flex-wrap gap-4"
           onSubmit={handleSelectedSkill}
         >
-          <div className="flex justify-between bg-inherit rounded-lg w-full flex-wrap gap-4">
+          <div className="flex justify-around bg-inherit rounded-lg w-full flex-wrap gap-4">
             <input
               type="text"
               ref={inputRef}
@@ -74,7 +74,7 @@ const SkillsModal = ({ closeModal, userId, skills }) => {
               placeholder="React.js"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              className="bg-transparent border outline-none py-1 px-2 w-2/3 rounded-lg"
+              className="bg-transparent border border-p_Blue outline-none py-2 px-2 w-2/3 rounded-lg"
             />
             <button type="submit" className="bg-s_blue px-4 py-1 rounded-2xl">
               Add
@@ -99,7 +99,9 @@ const SkillsModal = ({ closeModal, userId, skills }) => {
           <button
             type="button"
             onClick={submitSkills}
-            className="bg-s_blue px-4 py-2 rounded"
+            className={`bg-p_text text-p_Blue hover:bg-p_Blue hover:text-p_text duration-200 ml-8 font-semibold text-xl px-4 py-1 rounded w-32 ${
+              loading && "pointer-events-none w-40"
+            }`}
           >
             {loading ? "Submiting..." : "Submit"}
           </button>

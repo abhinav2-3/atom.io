@@ -8,11 +8,13 @@ import { Toaster } from "react-hot-toast";
 import { useEffect, lazy, Suspense } from "react";
 import { useDispatch } from "react-redux";
 import { getAllFeeds } from "./App/feedSlice";
-import PrivateComponents from "./Utils/PrivateComponents";
+// import PrivateComponents from "./Utils/PrivateComponents";
 import { fetchUser, fetchUserFeed } from "./App/userSlice";
 import Loader from "./Components/Loader";
 import Message from "./Pages/Message";
 import Bookmarks from "./Pages/Bookmarks";
+import SideNavbar from "./Components/SideNavbar";
+import RightSidebar from "./Components/RightSidebar";
 
 const CreatePost = lazy(() => import("./Pages/CreatePost"));
 const Account = lazy(() => import("./Pages/Account"));
@@ -29,28 +31,30 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className="bg-p_black text-p_text">
+    <Router>
       <Toaster />
-      <Router>
+      <div className="w-full h-full bg-p_black text-p_text flex justify-between">
+        <SideNavbar />
+        <Header />
         <Suspense fallback={<Loader />}>
-          <Header />
           <Routes>
-            <Route element={<PrivateComponents />}>
-              <Route path="/createpost" element={<CreatePost />} />
-              <Route path="/youraccount" element={<Account />} />
-              <Route path="/editProfile" element={<EditProfile />} />
-              <Route path="/userslist" element={<UserList />} />
-              <Route path="/message" element={<Message />} />
-              <Route path="/bookmarks" element={<Bookmarks />} />
-            </Route>
+            {/* <Route element={<PrivateComponents />}> */}
+            <Route path="/createpost" element={<CreatePost />} />
+            <Route path="/youraccount" element={<Account />} />
+            <Route path="/editProfile" element={<EditProfile />} />
+            <Route path="/userslist" element={<UserList />} />
+            <Route path="/message" element={<Message />} />
+            <Route path="/bookmarks" element={<Bookmarks />} />
+            {/* </Route> */}
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
           </Routes>
         </Suspense>
+        <RightSidebar />
         <Footer />
-      </Router>
-    </div>
+      </div>
+    </Router>
   );
 }
 

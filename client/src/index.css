@@ -6,7 +6,7 @@
 .feed {
     &::-webkit-scrollbar {
         background-color: transparent;
-        width: 7px;
+        width: 4px;
     }
 
     &::-webkit-scrollbar-track {
@@ -15,11 +15,30 @@
 
     &::-webkit-scrollbar-thumb {
         border-radius: 10px;
-        background: #5263EE;
+        background: #FAED26;
         transition: all 0.4s linear;
     }
 
     &::-webkit-scrollbar-thumb:hover {
-        background: #141f6d;
+        background: #8a8106;
     }
+}
+
+&::-webkit-scrollbar {
+    background-color: transparent;
+    width: 4px;
+}
+
+&::-webkit-scrollbar-track {
+    width: 3px;
+}
+
+&::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #FAED26;
+    transition: all 0.4s linear;
+}
+
+&::-webkit-scrollbar-thumb:hover {
+    background: #8a8106;
 }
