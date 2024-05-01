@@ -4,6 +4,7 @@ import { API_ACTIVEUSER, API_USERPOSTS } from "../Utils/APIs";
 import { getUser } from "../Utils/Authentication";
 
 const userId = getUser();
+if (!userId) console.log("object");
 
 export const fetchUser = createAsyncThunk("fetchUser", async () => {
   const response = await axios.post(API_ACTIVEUSER, { id: userId });

@@ -15,6 +15,7 @@ import Message from "./Pages/Message";
 import Bookmarks from "./Pages/Bookmarks";
 import SideNavbar from "./Components/SideNavbar";
 import RightSidebar from "./Components/RightSidebar";
+import { getUser } from "./Utils/Authentication";
 
 const CreatePost = lazy(() => import("./Pages/CreatePost"));
 const Account = lazy(() => import("./Pages/Account"));
@@ -23,12 +24,15 @@ const UserList = lazy(() => import("./Pages/UserList"));
 
 function App() {
   const dispatch = useDispatch();
+  const userId = getUser();
 
   useEffect(() => {
     dispatch(getAllFeeds());
-    dispatch(fetchUserFeed());
-    dispatch(fetchUser());
-  }, [dispatch]);
+    if (userId != null) {
+      dispatch(fetchUserFeed());
+      dispatch(fetchUser());
+    }
+  }, [dispatch, userId]);
 
   return (
     <Router>

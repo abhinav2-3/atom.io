@@ -8,7 +8,7 @@ const Header = () => {
 
   useEffect(() => {
     user?.avatar && setImage(user?.avatar);
-  }, [user.avatar]);
+  }, [user?.avatar]);
 
   return (
     <header className="w-4/5 rounded-3xl md:w-full flex justify-center bg-opacity-50 bg-p_black backdrop-blur-sm z-50 fixed left-12 top-3 md:left-0 md:top-0">

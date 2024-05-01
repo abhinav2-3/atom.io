@@ -108,17 +108,18 @@ const Signup = () => {
           </div>
           <button
             type="submit"
+            disabled={loading}
             className="bg-p_Blue mt-4 px-8 py-2 rounded w-2/3 hover:bg-s_blue duration-200 uppercase font-medium text-lg"
           >
             {loading ? "Signup..." : "Signup"}
           </button>
           <div className="flex gap-4">
-            <span>New User ?</span>
+            <span>Already Registered ?</span>
             <Link
-              to="/signup"
+              to="/login"
               className="text-p_text hover:text-p_text/70 duration-200"
             >
-              Signup
+              Login
             </Link>
           </div>
         </form>

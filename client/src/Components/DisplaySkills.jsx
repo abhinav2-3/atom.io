@@ -13,8 +13,8 @@ const DisplaySkills = () => {
   const userFeed = useSelector((state) => state.user.userFeed);
 
   useEffect(() => {
-    setSkill(user.skills);
-  }, [user.skills]);
+    setSkill(user?.skills);
+  }, [user?.skills]);
 
   return (
     <div className="p-4 flex gap-4 flex-wrap flex-col">

@@ -15,7 +15,7 @@ const ProfilePicture = ({ user, edit, setEdit }) => {
 
   useEffect(() => {
     user?.avatar && setImage(user?.avatar);
-  }, [user.avatar]);
+  }, [user?.avatar]);
 
   const convertToBase64 = (e) => {
     setUploading(true);

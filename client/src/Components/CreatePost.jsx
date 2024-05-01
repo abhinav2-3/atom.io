@@ -14,7 +14,7 @@ const CreatePost = () => {
 
   useEffect(() => {
     user?.avatar && setImage(user?.avatar);
-  }, [user.avatar]);
+  }, [user?.avatar]);
 
   const inputHandler = (e) => {
     setPost(e.target.value);

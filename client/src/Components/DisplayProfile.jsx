@@ -24,8 +24,8 @@ const DisplayProfile = () => {
           </Suspense>
         </aside>
         <aside className="flex md:ml-4 flex-col w-[55%] h-full">
-          <h2 className="text-xl font-bold capitalize">{user.name}</h2>
-          <h4 className="text-slate-400">@{user.username}</h4>
+          <h2 className="text-xl font-bold capitalize">{user?.name}</h2>
+          <h4 className="text-slate-400">@{user?.username}</h4>
           {edit && (
             <Link
               to={"/editProfile"}
