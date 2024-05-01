@@ -35,6 +35,7 @@ const CreatePost = () => {
       </span>
       <button
         type="submit"
+        disabled={loading}
         className="bg-p_Blue rounded px-10 py-1 mt-2 font-medium hover:bg-p_Blue/45 duration-200"
       >
         {loading ? "Posting..." : "Post"}

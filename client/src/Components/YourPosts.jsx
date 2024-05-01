@@ -9,6 +9,7 @@ const YourPosts = () => {
   useEffect(() => {
     setFeed(data);
   }, [data]);
+  const sortedFeed = [...feed].sort((a, b) => b.createdAt - a.createdAt);
 
   return (
     <section className="px-4 flex flex-col pb-16">
@@ -16,7 +17,7 @@ const YourPosts = () => {
         Your Posts: {feed.length}
       </h1>
       <div className="w-full">
-        {feed?.map((data) => {
+        {sortedFeed?.map((data) => {
           return <Card key={data._id} {...data} />;
         })}
       </div>

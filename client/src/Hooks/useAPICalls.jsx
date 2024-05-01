@@ -1,5 +1,4 @@
 import axios from "axios";
-import useCookie from "./useCookie";
 import {
   API_CREATEPOST,
   API_UPDATEPOST,
@@ -14,7 +13,6 @@ import authError from "../Utils/AuthError";
 import { getAllFeeds } from "../App/feedSlice";
 
 const useAPICalls = () => {
-  const { setCookie } = useCookie();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.userProfile);
@@ -24,7 +22,10 @@ const useAPICalls = () => {
     try {
       const response = await axios.post(API, formData);
       if (response.status === CODE) {
-        setCookie("userData", JSON.stringify(response.data?.user?._id), 2);
+        localStorage.setItem(
+          "userData",
+          JSON.stringify(response.data?.user?._id)
+        );
         dispatch(fetchUser());
         toast.success(response?.data?.message);
         navigate("/");
@@ -102,7 +103,6 @@ const useAPICalls = () => {
     try {
       const response = await axios.put(API_UPDATE_USERPROFILE, formData);
       if (response.status === 201) {
-        setCookie("userData", JSON.stringify(response.data?.user), 2);
         toast.success(response?.data?.message);
         dispatch(fetchUser());
         dispatch(fetchUserFeed());

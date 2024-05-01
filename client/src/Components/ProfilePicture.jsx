@@ -5,13 +5,11 @@ import { FaUserCircle } from "react-icons/fa";
 import { API_UPDATE_AVATAR } from "../Utils/APIs";
 import authError from "../Utils/AuthError";
 import toast from "react-hot-toast";
-import useCookie from "../Hooks/useCookie";
 import { useDispatch } from "react-redux";
 import { fetchUser } from "../App/userSlice";
 
 const ProfilePicture = ({ user, edit, setEdit }) => {
   const disptach = useDispatch();
-  const { setCookie } = useCookie();
   const [image, setImage] = useState("");
   const [uploading, setUploading] = useState(false);
 
@@ -42,7 +40,6 @@ const ProfilePicture = ({ user, edit, setEdit }) => {
       if (response?.status === 200) {
         toast.success(response?.data?.message);
         disptach(fetchUser());
-        setCookie("userData", JSON.stringify(response.data?.user), 2);
         setEdit(false);
         setUploading(false);
       }

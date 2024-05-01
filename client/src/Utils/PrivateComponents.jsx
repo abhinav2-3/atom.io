@@ -1,9 +1,9 @@
 import { Outlet, Navigate } from "react-router-dom";
-import useCookie from "../Hooks/useCookie";
 
 const PrivateComponents = () => {
-  const { getCookie } = useCookie();
-  const user = getCookie("userData");
+  const data = localStorage.getItem("userData");
+  let user;
+  if (data) user = JSON.parse(data);
   return user ? <Outlet /> : <Navigate to="/login" />;
 };
 

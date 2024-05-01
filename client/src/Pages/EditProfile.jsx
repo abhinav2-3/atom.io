@@ -23,7 +23,7 @@ const EditProfile = () => {
 
   const handleSubmit = async (e) => {
     setLoading(true);
-    handleEditProfile(e, formData);
+    await handleEditProfile(e, formData);
     setLoading(false);
   };
 
@@ -65,6 +65,7 @@ const EditProfile = () => {
       </div>
       <button
         type="submit"
+        disabled={loading}
         className="bg-p_Blue mt-4 px-8 py-2 rounded w-2/3 hover:bg-s_blue duration-200 uppercase font-medium text-lg"
       >
         {loading ? "Updating..." : "Update"}

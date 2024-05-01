@@ -1,14 +1,20 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { API_SIGNUP } from "../Utils/APIs";
 import useAPICalls from "../Hooks/useAPICalls";
+import { getUser } from "../Utils/Authentication";
 
 const Signup = () => {
   const { handleLogin } = useAPICalls();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const user = getUser();
+  user && navigate("/");
+
   const [formData, setFormData] = useState({
     name: "",
     username: "",
@@ -36,16 +42,9 @@ const Signup = () => {
         Welcome to Developers Community.
       </h1>
       <div className="flex gap-5 w-full items-center">
-        <figure className="w-1/2 justify-center h-full hidden md:flex">
-          <img
-            src="/x-dev-logo.jpg"
-            alt="Logo"
-            className="w-[60%] h-full object-contain shadow-lg rounded-full shadow-s_blue/45"
-          />
-        </figure>
         <form
-          onSubmit={(e) => handleSubmit(e)}
-          className="p-2 md:w-1/2 w-full flex gap-5 flex-col items-center justify-center"
+          onSubmit={handleSubmit}
+          className="p-2 w-full flex gap-5 flex-col items-center justify-center"
         >
           <div className="flex flex-col items-start w-2/3">
             <label className="text-lg font-medium">Name</label>
@@ -113,17 +112,15 @@ const Signup = () => {
           >
             {loading ? "Signup..." : "Signup"}
           </button>
-          <span className="ml-16 pb-2">
-            Already Registered ?{" "}
+          <div className="flex gap-4">
+            <span>New User ?</span>
             <Link
-              to="/login"
-              className="text-p_Blue hover:text-s_blue duration-200"
+              to="/signup"
+              className="text-p_text hover:text-p_text/70 duration-200"
             >
-              Login
+              Signup
             </Link>
-          </span>
-
-          {/* <button onClick={() => loginWithRedirect()}>Log In</button> */}
+          </div>
         </form>
       </div>
     </div>

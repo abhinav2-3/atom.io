@@ -44,6 +44,7 @@ const CreatePost = () => {
           type="text"
           placeholder="Whats happening.. !?"
           onChange={(e) => inputHandler(e)}
+          value={post}
           className="flex-1 bg-transparent border py-3 px-5 border-p_text rounded-lg outline-none"
         />
       </div>

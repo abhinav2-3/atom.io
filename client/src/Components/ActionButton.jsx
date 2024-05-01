@@ -7,11 +7,14 @@ import { getAllFeeds } from "../App/feedSlice";
 import toast from "react-hot-toast";
 import authError from "../Utils/AuthError";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { fetchUserFeed } from "../App/userSlice";
+import Spinner from "../Utils/Spinner";
 
 const ActionButton = ({ postId, onData }) => {
   const dispatch = useDispatch();
   const [showOptions, setShowOptions] = useState(false);
   const [edit, setEdit] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const toggleOptions = () => {
     setShowOptions(!showOptions);
@@ -24,19 +27,24 @@ const ActionButton = ({ postId, onData }) => {
   };
 
   const deletePost = async (id) => {
+    setLoading(true);
     setShowOptions(!showOptions);
     try {
       const response = await axios.post(API_DELTEPOST, { id });
       if (response.status === 200) {
         dispatch(getAllFeeds());
+        dispatch(fetchUserFeed());
         toast.success("Deleted");
       }
+      setLoading(false);
     } catch (error) {
       authError(error);
     }
   };
 
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <div className="relative inline-block">
       <button onClick={toggleOptions} title="Edit Post">
         <BsThreeDotsVertical size={22} />

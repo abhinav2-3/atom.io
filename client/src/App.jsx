@@ -8,7 +8,7 @@ import { Toaster } from "react-hot-toast";
 import { useEffect, lazy, Suspense } from "react";
 import { useDispatch } from "react-redux";
 import { getAllFeeds } from "./App/feedSlice";
-// import PrivateComponents from "./Utils/PrivateComponents";
+import PrivateComponents from "./Utils/PrivateComponents";
 import { fetchUser, fetchUserFeed } from "./App/userSlice";
 import Loader from "./Components/Loader";
 import Message from "./Pages/Message";
@@ -38,14 +38,14 @@ function App() {
         <Header />
         <Suspense fallback={<Loader />}>
           <Routes>
-            {/* <Route element={<PrivateComponents />}> */}
-            <Route path="/createpost" element={<CreatePost />} />
-            <Route path="/youraccount" element={<Account />} />
-            <Route path="/editProfile" element={<EditProfile />} />
-            <Route path="/userslist" element={<UserList />} />
-            <Route path="/message" element={<Message />} />
-            <Route path="/bookmarks" element={<Bookmarks />} />
-            {/* </Route> */}
+            <Route element={<PrivateComponents />}>
+              <Route path="/createpost" element={<CreatePost />} />
+              <Route path="/youraccount" element={<Account />} />
+              <Route path="/editProfile" element={<EditProfile />} />
+              <Route path="/userslist" element={<UserList />} />
+              <Route path="/message" element={<Message />} />
+              <Route path="/bookmarks" element={<Bookmarks />} />
+            </Route>
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />

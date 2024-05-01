@@ -1,17 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_ACTIVEUSER, API_USERPOSTS } from "../Utils/APIs";
-import useCookie from "../Hooks/useCookie";
+import { getUser } from "../Utils/Authentication";
+
+const userId = getUser();
 
 export const fetchUser = createAsyncThunk("fetchUser", async () => {
-  const { getCookie } = useCookie();
-  const userId = getCookie("userData");
   const response = await axios.post(API_ACTIVEUSER, { id: userId });
   return response?.data?.user;
 });
 export const fetchUserFeed = createAsyncThunk("fetchUserFeed", async () => {
-  const { getCookie } = useCookie();
-  const userId = getCookie("userData");
   const response = await axios.post(API_USERPOSTS, { id: userId });
   return response?.data?.posts;
 });

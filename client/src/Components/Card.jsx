@@ -37,6 +37,7 @@ const Card = (data) => {
             />
             <div className="w-full gap-8 flex">
               <button
+                disabled={loading}
                 className="hover:bg-p_Blue hover:text-p_text px-4 py-1 w-32 rounded font-semibold bg-p_text text-p_Blue duration-200"
                 onClick={() => updateHandle(data._id)}
               >
@@ -67,7 +68,6 @@ const Card = (data) => {
               postId={data._id}
               onData={(data) => {
                 setIsEdit(data);
-                console.log(data);
               }}
             />
           </Suspense>

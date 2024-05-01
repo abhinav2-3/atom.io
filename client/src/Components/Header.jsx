@@ -5,13 +5,14 @@ import { Link } from "react-router-dom";
 const Header = () => {
   const [image, setImage] = useState("");
   const user = useSelector((state) => state.user.userProfile);
+
   useEffect(() => {
     user?.avatar && setImage(user?.avatar);
   }, [user.avatar]);
 
   return (
-    <header className="w-full bg-opacity-50 bg-p_black backdrop-blur-sm z-50 fixed top-0">
-      <div className="flex justify-between items-center py-2 px-4 md:px-16">
+    <header className="w-4/5 rounded-3xl md:w-full flex justify-center bg-opacity-50 bg-p_black backdrop-blur-sm z-50 fixed left-12 top-3 md:left-0 md:top-0">
+      <div className="w-full flex justify-between items-center py-2 px-4 md:px-16">
         <h3 className="text-2xl font-bold">Atom.io</h3>
         <input
           type="search"
