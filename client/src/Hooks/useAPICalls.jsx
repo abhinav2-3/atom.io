@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import authError from "../Utils/AuthError";
 import { getAllFeeds } from "../App/feedSlice";
+import { getUser } from "../Utils/Authentication";
 
 const useAPICalls = () => {
   const dispatch = useDispatch();
@@ -22,11 +23,19 @@ const useAPICalls = () => {
     try {
       const response = await axios.post(API, formData);
       if (response.status === CODE) {
-        localStorage.setItem(
-          "userData",
-          JSON.stringify(response.data?.user?._id)
-        );
-        dispatch(fetchUser());
+        await new Promise((resolve, reject) => {
+          try {
+            localStorage.setItem(
+              "userData",
+              JSON.stringify(response.data?.user?._id)
+            );
+            resolve();
+          } catch (error) {
+            reject(error);
+          }
+        });
+        const userId = getUser();
+        dispatch(fetchUser(userId));
         toast.success(response?.data?.message);
         navigate("/");
       }
@@ -45,7 +54,8 @@ const useAPICalls = () => {
       if (response.status === 201) {
         toast.success("Post Created");
         dispatch(getAllFeeds());
-        dispatch(fetchUserFeed());
+        const userId = getUser();
+        dispatch(fetchUserFeed(userId));
         setPost("");
         navigate("/");
       }
@@ -63,7 +73,8 @@ const useAPICalls = () => {
       });
       if (response.status === 201) {
         dispatch(getAllFeeds());
-        dispatch(fetchUserFeed());
+        const userId = getUser();
+        dispatch(fetchUserFeed(userId));
         switch (button) {
           case "like":
             toast.success("Post Liked");
@@ -90,7 +101,8 @@ const useAPICalls = () => {
       if (response.status === 201) {
         toast.success(response?.data?.message);
         dispatch(getAllFeeds());
-        dispatch(fetchUserFeed());
+        const userId = getUser();
+        dispatch(fetchUserFeed(userId));
         setIsEdit(false);
       }
     } catch (error) {
@@ -104,8 +116,8 @@ const useAPICalls = () => {
       const response = await axios.put(API_UPDATE_USERPROFILE, formData);
       if (response.status === 201) {
         toast.success(response?.data?.message);
-        dispatch(fetchUser());
-        dispatch(fetchUserFeed());
+        const userId = getUser();
+        dispatch(fetchUser(userId));
         navigate("/youraccount");
       }
     } catch (error) {

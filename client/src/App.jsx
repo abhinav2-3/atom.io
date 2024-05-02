@@ -28,10 +28,8 @@ function App() {
 
   useEffect(() => {
     dispatch(getAllFeeds());
-    if (userId != null) {
-      dispatch(fetchUserFeed());
-      dispatch(fetchUser());
-    }
+    dispatch(fetchUserFeed(userId));
+    dispatch(fetchUser(userId));
   }, [dispatch, userId]);
 
   return (

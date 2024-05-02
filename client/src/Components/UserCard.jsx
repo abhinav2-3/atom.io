@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import authError from "../Utils/AuthError";
 import { useDispatch } from "react-redux";
 import { fetchUser } from "../App/userSlice";
+import { getUser } from "../Utils/Authentication";
 
 const UserCard = ({ name, username, id, avatar, user }) => {
   const dispatch = useDispatch();
@@ -16,7 +17,8 @@ const UserCard = ({ name, username, id, avatar, user }) => {
         secondUserId,
       });
       if (response.status === 201) {
-        dispatch(fetchUser());
+        const userId = getUser();
+        dispatch(fetchUser(userId));
         toast.success(response?.data?.message);
       }
     } catch (error) {
@@ -30,7 +32,8 @@ const UserCard = ({ name, username, id, avatar, user }) => {
         secondUserId,
       });
       if (response.status === 201) {
-        dispatch(fetchUser());
+        const userId = getUser();
+        dispatch(fetchUser(userId));
         toast.success(response?.data?.message);
       }
     } catch (error) {

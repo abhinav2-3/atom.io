@@ -7,6 +7,7 @@ import authError from "../Utils/AuthError";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { fetchUser } from "../App/userSlice";
+import { getUser } from "../Utils/Authentication";
 
 const SkillsModal = ({ closeModal, userId, skills }) => {
   const [input, setInput] = useState("");
@@ -40,7 +41,8 @@ const SkillsModal = ({ closeModal, userId, skills }) => {
       });
       if (response.status === 201) {
         toast.success(response.data.message);
-        dispatch(fetchUser());
+        const userId = getUser();
+        dispatch(fetchUser(userId));
         closeModal(false);
       }
       setLoading(false);

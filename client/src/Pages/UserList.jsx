@@ -6,6 +6,7 @@ import authError from "../Utils/AuthError";
 import Loader from "../Components/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "../App/userSlice";
+import { getUser } from "../Utils/Authentication";
 
 const UserList = () => {
   const [usersList, setUsersList] = useState([]);
@@ -20,7 +21,8 @@ const UserList = () => {
         const response = await axios.post(API_GETUSERS, { id: user?._id });
         if (response.status === 200) {
           setUsersList(response?.data?.newUsers);
-          dispatch(fetchUser());
+          const userId = getUser();
+          dispatch(fetchUser(userId));
           setLoading(false);
         }
       } catch (error) {

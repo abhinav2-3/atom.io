@@ -81,7 +81,10 @@ const Login = () => {
               )}
             </div>
           </div>
-          <button className="bg-p_Blue mt-4 px-8 py-2 rounded w-2/3 hover:bg-s_blue duration-200 uppercase font-medium text-lg">
+          <button
+            disabled={loading}
+            className="bg-p_Blue mt-4 px-8 py-2 rounded w-2/3 hover:bg-s_blue duration-200 uppercase font-medium text-lg"
+          >
             {loading ? "Login..." : "Login"}
           </button>
           <div className="flex gap-4">

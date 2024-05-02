@@ -7,6 +7,7 @@ import authError from "../Utils/AuthError";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { fetchUser } from "../App/userSlice";
+import { getUser } from "../Utils/Authentication";
 
 const ProfilePicture = ({ user, edit, setEdit }) => {
   const disptach = useDispatch();
@@ -39,7 +40,8 @@ const ProfilePicture = ({ user, edit, setEdit }) => {
       });
       if (response?.status === 200) {
         toast.success(response?.data?.message);
-        disptach(fetchUser());
+        const userId = getUser();
+        disptach(fetchUser(userId));
         setEdit(false);
         setUploading(false);
       }
