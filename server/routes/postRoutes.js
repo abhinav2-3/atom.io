@@ -3,11 +3,12 @@ import {
   createPost,
   deletePost,
   feed,
-  likeAndSaved,
+  likeSaveCount,
   postById,
   updatePost,
   userPost,
 } from "../controllers/postControls.js";
+import { likeAndSaved } from "../controllers/userControls.js";
 
 export const postRouter = express.Router();
 
@@ -16,5 +17,6 @@ postRouter.get("/feedposts", feed);
 postRouter.get("/getpost/:id", postById);
 postRouter.post("/userposts", userPost);
 postRouter.put("/updateinteraction", likeAndSaved);
+postRouter.put("/likesavecount", likeSaveCount);
 postRouter.post("/deletepost", deletePost);
 postRouter.put("/updatepost", updatePost);

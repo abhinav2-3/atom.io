@@ -58,7 +58,7 @@ const Card = (data) => {
         )}
 
         <Suspense fallback={<Loader />}>
-          <PostButtons data={data} userId={user?._id} />
+          <PostButtons data={data} user={user} />
         </Suspense>
       </aside>
       <aside className="w-4 h-8">

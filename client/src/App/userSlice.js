@@ -1,9 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_ACTIVEUSER, API_USERPOSTS } from "../Utils/APIs";
-// import { getUser } from "../Utils/Authentication";
 
-// const userId = getUser();
 export const fetchUser = createAsyncThunk("fetchUser", async (userId) => {
   const response = await axios.post(API_ACTIVEUSER, { id: userId });
   return response?.data?.user;

@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  API_ACTIVITY_COUNT,
   API_CREATEPOST,
   API_UPDATEPOST,
   API_UPDATEPOST_ACTIVITY,
@@ -72,8 +73,10 @@ const useAPICalls = () => {
         userId: user?._id,
       });
       if (response.status === 201) {
+        await axios.put(API_ACTIVITY_COUNT, { postId, button });
         dispatch(getAllFeeds());
         const userId = getUser();
+        dispatch(fetchUser(userId));
         dispatch(fetchUserFeed(userId));
         switch (button) {
           case "like":

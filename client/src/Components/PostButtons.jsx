@@ -5,7 +5,7 @@ import useAPICalls from "../Hooks/useAPICalls";
 import { useState } from "react";
 import Spinner from "../Utils/Spinner";
 
-const PostButtons = ({ data, userId }) => {
+const PostButtons = ({ data, user }) => {
   const { handleLikeSave } = useAPICalls();
   const [likeLoading, setLikeLoading] = useState(false);
   const [saveLoading, setSaveLoading] = useState(false);
@@ -25,7 +25,7 @@ const PostButtons = ({ data, userId }) => {
           onClick={() => {
             postInteractionHandler(
               data._id,
-              `${data?.likes?.includes(userId) ? "dislike" : "like"}`
+              `${user?.likes?.includes(data?._id) ? "dislike" : "like"}`
             );
           }}
           title="Like"
@@ -33,13 +33,13 @@ const PostButtons = ({ data, userId }) => {
         >
           {likeLoading ? (
             <Spinner />
-          ) : data?.likes?.includes(userId) ? (
+          ) : user?.likes?.includes(data._id) ? (
             <FaHeart size={20} />
           ) : (
             <FaRegHeart size={20} />
           )}
         </button>
-        <span className="text-sm">{data.likes.length}</span>
+        <span className="text-sm">{data.likes}</span>
       </div>
       <div className="flex flex-col w-10 justify-center items-center">
         <button
@@ -55,7 +55,7 @@ const PostButtons = ({ data, userId }) => {
           onClick={() =>
             postInteractionHandler(
               data._id,
-              `${data?.saved?.includes(userId) ? "unsave" : "save"}`
+              `${user?.saved?.includes(data._id) ? "unsave" : "save"}`
             )
           }
           title="Bookmark"
@@ -63,13 +63,13 @@ const PostButtons = ({ data, userId }) => {
         >
           {saveLoading ? (
             <Spinner />
-          ) : data?.saved?.includes(userId) ? (
+          ) : user?.saved?.includes(data._id) ? (
             <FaBookmark size={20} />
           ) : (
             <FaRegBookmark size={20} />
           )}
         </button>
-        <span className="text-sm">{data.saved.length}</span>
+        <span className="text-sm">{data.saved}</span>
       </div>
     </div>
   );
@@ -77,7 +77,7 @@ const PostButtons = ({ data, userId }) => {
 
 PostButtons.propTypes = {
   data: PropTypes.object,
-  userId: PropTypes.string,
+  user: PropTypes.object,
 };
 
 export default PostButtons;

@@ -72,16 +72,6 @@ export const login = async (req, res) => {
   }
 };
 
-export const logout = (req, res) => {
-  return res
-    .status(200)
-    .cookie("token", "", { expiresIn: new Date(Date.now()) })
-    .json({
-      message: "User logged out successfully.",
-      success: true,
-    });
-};
-
 export const updateProfile = async (req, res) => {
   const { name, username, email } = req.body;
 
@@ -236,5 +226,28 @@ export const uploadAvatar = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const likeAndSaved = async (req, res) => {
+  const { postId, button, userId } = req.body;
+  const actionMap = {
+    like: { $addToSet: { likes: postId } },
+    save: { $addToSet: { saved: postId } },
+    dislike: { $pull: { likes: postId } },
+    unsave: { $pull: { saved: postId } },
+    default: { $inc: { comments: 1 } }, // Increment comments count for other actions
+  };
+
+  // Get the update operation based on the button action
+  const updateField = actionMap[button] || actionMap.default;
+
+  try {
+    const user = await User.findByIdAndUpdate(userId, updateField, {
+      new: true,
+    });
+    return res.status(201).json({ success: true, user });
+  } catch (error) {
+    handlerErrors(error, res, 500, "Internal Server Error");
   }
 };

@@ -73,14 +73,14 @@ export const feed = async (req, res) => {
   }
 };
 
-export const likeAndSaved = async (req, res) => {
-  const { postId, button, userId } = req.body;
+export const likeSaveCount = async (req, res) => {
+  const { postId, button } = req.body;
   const actionMap = {
-    like: { $addToSet: { likes: userId } },
-    save: { $addToSet: { saved: userId } },
-    dislike: { $pull: { likes: userId } },
-    unsave: { $pull: { saved: userId } },
-    default: { $inc: { comments: 1 } }, // Increment comments count for other actions
+    like: { $inc: { likes: 1 } },
+    save: { $inc: { saved: 1 } },
+    dislike: { $inc: { likes: -1 } },
+    unsave: { $inc: { saved: -1 } },
+    default: { $inc: { comments: 1 } },
   };
 
   // Get the update operation based on the button action
