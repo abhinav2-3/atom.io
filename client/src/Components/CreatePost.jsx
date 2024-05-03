@@ -29,7 +29,7 @@ const CreatePost = () => {
   return (
     <section className="py-2 px-4 bg-p_Blue flex flex-col mb-6 rounded-md gap-2 h-40 w-full shadow-md shadow-p_text/60">
       <div className="h-3/4 flex gap-8 items-center justify-between">
-        <figure className="w-24 h-24 rounded-full overflow-hidden border border-s_blue">
+        <figure className="w-[28%] md:w-24 h-24 rounded-full overflow-hidden border border-s_blue">
           {image === "" || image === null || image === undefined ? (
             <FaUserCircle className="w-full h-full" />
           ) : (
@@ -45,7 +45,7 @@ const CreatePost = () => {
           placeholder="Whats happening.. !?"
           onChange={(e) => inputHandler(e)}
           value={post}
-          className="flex-1 bg-transparent border py-3 px-5 border-p_text rounded-lg outline-none"
+          className="w-3/5 md:flex-1 bg-transparent border py-3 px-5 border-p_text rounded-lg outline-none"
         />
       </div>
       <div className="w-full flex justify-around text-lg">

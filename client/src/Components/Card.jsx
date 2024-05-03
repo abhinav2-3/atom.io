@@ -61,7 +61,7 @@ const Card = (data) => {
           <PostButtons data={data} userId={user?._id} />
         </Suspense>
       </aside>
-      <aside className="w-16">
+      <aside className="w-4 h-8">
         {user?._id === data?.postedBy && (
           <Suspense fallback={<Loader />}>
             <ActionButton

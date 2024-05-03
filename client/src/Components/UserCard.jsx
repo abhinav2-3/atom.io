@@ -6,9 +6,16 @@ import authError from "../Utils/AuthError";
 import { useDispatch } from "react-redux";
 import { fetchUser } from "../App/userSlice";
 import { getUser } from "../Utils/Authentication";
+import { FaUserCircle } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 const UserCard = ({ name, username, id, avatar, user }) => {
   const dispatch = useDispatch();
+  const [image, setImage] = useState("");
+
+  useEffect(() => {
+    setImage(avatar);
+  }, [avatar]);
 
   const addConnection = async (secondUserId) => {
     try {
@@ -43,27 +50,35 @@ const UserCard = ({ name, username, id, avatar, user }) => {
 
   return (
     <div className="py-3 px-4 w-full flex justify-between shadow-lg rounded-lg shadow-p_Blue/40">
-      <aside className="flex items-center gap-8">
-        <figure className="rounded-full w-20 h-20 p-1 border overflow-hidden">
-          <img src={avatar} alt="Avatar" className="object-cover" />
+      <aside className="flex items-center justify-center gap-2 md:gap-5">
+        <figure className="rounded-full w-20 h-20 p-1 overflow-hidden border">
+          {image === "" || image === null || image === undefined ? (
+            <FaUserCircle className="w-full h-full" />
+          ) : (
+            <img
+              src={avatar}
+              alt="Avatar"
+              className="w-full h-full object-cover rounded-full"
+            />
+          )}
         </figure>
         <div>
-          <h1 className="text-2xl font-bold">{name}</h1>
+          <h1 className="md:text-2xl text-lg font-bold">{name}</h1>
           <h4 className="text-slate-400 lowercase">@{username}</h4>
         </div>
       </aside>
-      <aside className="grid place-items-center pr-4">
+      <aside className="grid place-items-center">
         {user.connections.includes(id) ? (
           <button
             onClick={() => removeConnection(id)}
-            className="text-red-500 text-lg py-2 px-4 border border-red-600 rounded-2xl font-semibold hover:text-red-700 duration-200"
+            className="text-red-500 text-lg md:py-2 py-1 md:px-4 px-2 border border-red-600 rounded-2xl font-semibold hover:text-red-700 duration-200"
           >
             Remove
           </button>
         ) : (
           <button
             onClick={() => addConnection(id)}
-            className="text-green-500  py-2 px-4 border border-green-500 rounded-2xl text-lg font-semibold hover:text-green-700 duration-200"
+            className="text-green-500  md:py-2 py-1 md:px-4 px-2 border border-green-500 rounded-2xl text-lg font-semibold hover:text-green-700 duration-200"
           >
             Connect
           </button>

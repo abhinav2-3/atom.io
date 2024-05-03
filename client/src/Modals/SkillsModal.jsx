@@ -18,7 +18,7 @@ const SkillsModal = ({ closeModal, userId, skills }) => {
 
   useEffect(() => {
     setSelectedSkills(skills);
-  }, []);
+  }, [skills]);
 
   const handleSelectedSkill = (e) => {
     e.preventDefault();
