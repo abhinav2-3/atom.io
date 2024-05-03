@@ -1,5 +1,5 @@
-// let URL = "https://atom-io.onrender.com/api/";
-let URL = "http://localhost:8000/api/";
+let URL = "https://atom-io.onrender.com/api/";
+//let URL = "http://localhost:8000/api/";
 
 // APIs for Users
 export const API_SIGNUP = URL + "signup";
