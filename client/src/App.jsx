@@ -9,7 +9,7 @@ import { useEffect, lazy, Suspense } from "react";
 import { useDispatch } from "react-redux";
 import { getAllFeeds } from "./App/feedSlice";
 import PrivateComponents from "./Utils/PrivateComponents";
-import { fetchUser, fetchUserFeed } from "./App/userSlice";
+import { fetchUser } from "./App/userSlice";
 import Loader from "./Components/Loader";
 import Message from "./Pages/Message";
 import Bookmarks from "./Pages/Bookmarks";
@@ -28,7 +28,6 @@ function App() {
 
   useEffect(() => {
     dispatch(getAllFeeds());
-    dispatch(fetchUserFeed(userId));
     dispatch(fetchUser(userId));
   }, [dispatch, userId]);
 

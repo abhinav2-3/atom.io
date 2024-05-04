@@ -7,9 +7,7 @@ import { getAllFeeds } from "../App/feedSlice";
 import toast from "react-hot-toast";
 import authError from "../Utils/AuthError";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { fetchUserFeed } from "../App/userSlice";
 import Spinner from "../Utils/Spinner";
-import { getUser } from "../Utils/Authentication";
 
 const ActionButton = ({ postId, onData }) => {
   const dispatch = useDispatch();
@@ -34,8 +32,6 @@ const ActionButton = ({ postId, onData }) => {
       const response = await axios.post(API_DELTEPOST, { id });
       if (response.status === 200) {
         dispatch(getAllFeeds());
-        const userId = getUser();
-        dispatch(fetchUserFeed(userId));
         toast.success("Deleted");
       }
       setLoading(false);

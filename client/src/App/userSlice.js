@@ -1,18 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { API_ACTIVEUSER, API_USERPOSTS } from "../Utils/APIs";
+import { API_ACTIVEUSER } from "../Utils/APIs";
 
 export const fetchUser = createAsyncThunk("fetchUser", async (userId) => {
   const response = await axios.post(API_ACTIVEUSER, { id: userId });
   return response?.data?.user;
 });
-export const fetchUserFeed = createAsyncThunk(
-  "fetchUserFeed",
-  async (userId) => {
-    const response = await axios.post(API_USERPOSTS, { id: userId });
-    return response?.data?.posts;
-  }
-);
 
 export const userSlice = createSlice({
   name: "user",
@@ -26,8 +19,6 @@ export const userSlice = createSlice({
       connections: [],
       avatar: "",
     },
-    userFeed: [],
-    status: "idle",
   },
   reducers: {
     setUserFeed: (state, action) => {
@@ -35,18 +26,6 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // Fetching User Feed
-    builder
-      .addCase(fetchUserFeed.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchUserFeed.rejected, (state) => {
-        state.status = "failed";
-      })
-      .addCase(fetchUserFeed.fulfilled, (state, action) => {
-        state.status = "Succeeded";
-        state.userFeed = action.payload;
-      });
     // Fetching User Profile
     builder
       .addCase(fetchUser.pending, (state) => {

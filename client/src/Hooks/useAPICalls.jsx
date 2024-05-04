@@ -7,7 +7,7 @@ import {
   API_UPDATE_USERPROFILE,
 } from "../Utils/APIs";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUser, fetchUserFeed } from "../App/userSlice";
+import { fetchUser } from "../App/userSlice";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import authError from "../Utils/AuthError";
@@ -55,8 +55,6 @@ const useAPICalls = () => {
       if (response.status === 201) {
         toast.success("Post Created");
         dispatch(getAllFeeds());
-        const userId = getUser();
-        dispatch(fetchUserFeed(userId));
         setPost("");
         navigate("/");
       }
@@ -77,7 +75,6 @@ const useAPICalls = () => {
         dispatch(getAllFeeds());
         const userId = getUser();
         dispatch(fetchUser(userId));
-        dispatch(fetchUserFeed(userId));
         switch (button) {
           case "like":
             toast.success("Post Liked");
@@ -104,8 +101,6 @@ const useAPICalls = () => {
       if (response.status === 201) {
         toast.success(response?.data?.message);
         dispatch(getAllFeeds());
-        const userId = getUser();
-        dispatch(fetchUserFeed(userId));
         setIsEdit(false);
       }
     } catch (error) {

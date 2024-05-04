@@ -7,10 +7,10 @@ const Account = () => {
   const user = useSelector((state) => state.user.userProfile);
 
   return (
-    <div className="pt-16 px-8 h-screen w-full overflow-y-auto feed flex flex-col gap-8">
+    <div className="pt-20 px-8 h-screen w-full overflow-y-auto feed flex flex-col gap-8">
       <DisplayProfile user={user} />
       <DisplaySkills />
-      <YourPosts />
+      <YourPosts userId={user?._id} />
     </div>
   );
 };
