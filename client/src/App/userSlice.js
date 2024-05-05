@@ -10,15 +10,7 @@ export const fetchUser = createAsyncThunk("fetchUser", async (userId) => {
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    userProfile: {
-      _id: "66275ee4f83e9dfdb2952953",
-      name: "User",
-      username: "username",
-      email: "user@gmail.com",
-      skills: [],
-      connections: [],
-      avatar: "",
-    },
+    userProfile: null,
   },
   reducers: {
     setUserFeed: (state, action) => {

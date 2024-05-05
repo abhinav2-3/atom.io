@@ -21,7 +21,7 @@ const Card = (data) => {
   };
 
   return (
-    <div className="py-4 flex px-10 bg-s_blue/30 rounded mb-7 tracking-tight overflow-hidden shadow-md shadow-slate-500">
+    <div className="py-2 md:py-4 flex px-5 md:px-10 bg-s_blue/30 rounded mb-7 tracking-tight overflow-hidden">
       <aside className="w-[95%] h-full flex flex-col">
         <h1 className="font-bold text-white">{data.name}</h1>
         <span className="lowercase text-sm text-p_text/50">
