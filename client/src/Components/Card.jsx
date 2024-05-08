@@ -7,6 +7,7 @@ const PostButtons = lazy(() => import("./PostButtons"));
 const ActionButton = lazy(() => import("./ActionButton"));
 
 const Card = (data) => {
+  const { name, username, post, _id } = data;
   const { handlePostUpdate } = useAPICalls();
   const [isEdit, setIsEdit] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -23,10 +24,8 @@ const Card = (data) => {
   return (
     <div className="py-2 md:py-4 flex px-5 md:px-10 bg-s_blue/30 rounded mb-7 tracking-tight overflow-hidden">
       <aside className="w-[95%] h-full flex flex-col">
-        <h1 className="font-bold text-white">{data.name}</h1>
-        <span className="lowercase text-sm text-p_text/50">
-          @{data.username}
-        </span>
+        <h1 className="font-bold text-white">{name}</h1>
+        <span className="lowercase text-sm text-p_text/50">@{username}</span>
         {isEdit ? (
           <>
             <input
@@ -53,10 +52,9 @@ const Card = (data) => {
           </>
         ) : (
           <article className="my-2 text-wrap text-justify leading-tight text-ellipsis text-slate-200">
-            {data.post}
+            {post}
           </article>
         )}
-
         <Suspense fallback={<Loader />}>
           <PostButtons data={data} user={user} />
         </Suspense>
@@ -65,7 +63,7 @@ const Card = (data) => {
         {user?._id === data?.postedBy && (
           <Suspense fallback={<Loader />}>
             <ActionButton
-              postId={data._id}
+              postId={_id}
               onData={(data) => {
                 setIsEdit(data);
               }}

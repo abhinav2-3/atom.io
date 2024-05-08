@@ -4,11 +4,13 @@ import { BiCommentDetail } from "react-icons/bi";
 import useAPICalls from "../Hooks/useAPICalls";
 import { useState } from "react";
 import Spinner from "../Utils/Spinner";
+import SinglePost from "../Modals/CommentModel";
 
 const PostButtons = ({ data, user }) => {
   const { handleLikeSave } = useAPICalls();
   const [likeLoading, setLikeLoading] = useState(false);
   const [saveLoading, setSaveLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const postInteractionHandler = async (postId, button) => {
     if (button === "like" || button == "dislike") setLikeLoading(true);
@@ -42,10 +44,7 @@ const PostButtons = ({ data, user }) => {
         <span className="text-sm">{data.likes}</span>
       </div>
       <div className="flex flex-col w-10 justify-center items-center">
-        <button
-          onClick={() => handleLikeSave(data._id, "comment")}
-          title="Comment"
-        >
+        <button onClick={() => setOpenModal(true)} title="Comment">
           <BiCommentDetail size={20} />
         </button>
         <span className="text-sm">{data.comments}</span>
@@ -71,6 +70,7 @@ const PostButtons = ({ data, user }) => {
         </button>
         <span className="text-sm">{data.saved}</span>
       </div>
+      {openModal && <SinglePost closeModal={setOpenModal} />}
     </div>
   );
 };

@@ -22,10 +22,19 @@ const postSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  comments: {
-    type: Number,
-    default: 0,
-  },
+  comments: [
+    {
+      commentedBy: {
+        type: String,
+        required: true,
+      },
+      body: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
+
   saved: {
     type: Number,
     default: 0,
