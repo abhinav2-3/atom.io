@@ -95,6 +95,22 @@ export const likeSaveCount = async (req, res) => {
     handlerErrors(error, res, 500, "Internal Server Error");
   }
 };
+export const addComment = async (req, res) => {
+  const { userId, body, postId } = req.body;
+
+  try {
+    await Post.findByIdAndUpdate(
+      postId,
+      { $push: { comments: { commentedBy: userId, body } } },
+      {
+        new: true,
+      }
+    );
+    return res.status(201).json({ success: true, message: "Comment Added" });
+  } catch (error) {
+    handlerErrors(error, res, 500, "Internal Server Error");
+  }
+};
 
 export const deletePost = async (req, res) => {
   const { id } = req.body;

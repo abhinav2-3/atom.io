@@ -47,7 +47,7 @@ const PostButtons = ({ data, user }) => {
         <button onClick={() => setOpenModal(true)} title="Comment">
           <BiCommentDetail size={20} />
         </button>
-        <span className="text-sm">{data.comments}</span>
+        <span className="text-sm">{data?.comments?.length}</span>
       </div>
       <div className="flex flex-col w-10 justify-center items-center">
         <button
@@ -70,7 +70,7 @@ const PostButtons = ({ data, user }) => {
         </button>
         <span className="text-sm">{data.saved}</span>
       </div>
-      {openModal && <SinglePost closeModal={setOpenModal} />}
+      {openModal && <SinglePost closeModal={setOpenModal} post={data} />}
     </div>
   );
 };

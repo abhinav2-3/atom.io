@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  addComment,
   createPost,
   deletePost,
   feed,
@@ -17,6 +18,7 @@ postRouter.get("/feedposts", feed);
 postRouter.get("/getpost/:id", postById);
 postRouter.post("/userposts", userPost);
 postRouter.put("/updateinteraction", likeAndSaved);
+postRouter.put("/addcomment", addComment);
 postRouter.put("/likesavecount", likeSaveCount);
 postRouter.post("/deletepost", deletePost);
 postRouter.put("/updatepost", updatePost);

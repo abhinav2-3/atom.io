@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
   API_ACTIVITY_COUNT,
+  API_ADDCOMMENT,
   API_CREATEPOST,
   API_UPDATEPOST,
   API_UPDATEPOST_ACTIVITY,
@@ -122,6 +123,21 @@ const useAPICalls = () => {
       authError(error);
     }
   };
+  const addComment = async (postId, body) => {
+    try {
+      const response = await axios.put(API_ADDCOMMENT, {
+        userId: user?._id,
+        postId,
+        body,
+      });
+      if (response.status === 201) {
+        toast.success(response?.data?.message);
+        dispatch(getAllFeeds());
+      }
+    } catch (error) {
+      authError(error);
+    }
+  };
 
   return {
     handleLogin,
@@ -129,6 +145,7 @@ const useAPICalls = () => {
     handleLikeSave,
     handlePostUpdate,
     handleEditProfile,
+    addComment,
   };
 };
 

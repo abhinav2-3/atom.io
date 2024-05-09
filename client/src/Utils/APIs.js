@@ -1,5 +1,5 @@
-// let URL = "https://atom-io.onrender.com/api/";
-let URL = "http://localhost:8000/api/";
+let URL = "https://atom-io.onrender.com/api/";
+// let URL = "http://localhost:8000/api/";
 
 // APIs for Users
 export const API_SIGNUP = URL + "signup";
@@ -20,5 +20,6 @@ export const API_UPDATEPOST_ACTIVITY = URL + "updateinteraction";
 export const API_ACTIVITY_COUNT = URL + "likesavecount";
 export const API_DELTEPOST = URL + "deletepost";
 export const API_UPDATEPOST = URL + "updatepost";
+export const API_ADDCOMMENT = URL + "addcomment";
 // export const API_USERPOSTS = URL + "userposts";
 // export const API_GETPOSTBY_ID = URL + "/getpost/:id";

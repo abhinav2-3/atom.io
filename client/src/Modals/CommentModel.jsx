@@ -1,32 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import PropTypes from "prop-types";
+import useAPICalls from "../Hooks/useAPICalls";
 
-const dummyComments = [
-  {
-    body: "1st comment",
-  },
-  {
-    body: "2st comment",
-  },
-  {
-    body: "3st comment",
-  },
-  {
-    body: "4st comment",
-  },
-];
-const CommentModel = ({ closeModal }) => {
-  const [comments, setComments] = useState(dummyComments);
+const CommentModel = ({ closeModal, post }) => {
   const [input, setInput] = useState("");
+  const [comments, setComments] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const { addComment } = useAPICalls();
 
-  const commentHandler = () => {
-    const newComment = {
-      body: input,
-    };
-    setComments((prev) => [newComment, ...prev]);
+  const commentHandler = async () => {
+    setLoading(true);
+    await addComment(post?._id, input);
     setInput("");
+    setLoading(false);
   };
+
+  useEffect(() => {
+    setComments(post?.comments);
+  }, [post]);
 
   return (
     <div className="fixed z-50 inset-0 w-full bg-p_black bg-opacity-30 backdrop-blur-sm flex items-center justify-center">
@@ -47,16 +39,17 @@ const CommentModel = ({ closeModal }) => {
           />
           <button
             onClick={commentHandler}
+            disabled={loading}
             className="bg-p_text text-p_Blue font-bold px-2 rounded-lg hover:bg-transparent duration-200 hover:text-p_text"
           >
-            Comment
+            {loading ? "Please Wait" : "Comment"}
           </button>
         </div>
         <div className="w-full mt-4 overflow-auto h-5/6 feed text-white flex flex-col gap-4">
-          {comments?.map((data, i) => {
+          {comments?.map((data) => {
             return (
               <li
-                key={i}
+                key={data._id}
                 className="list-none border p-3 border-slate-500 rounded-lg"
               >
                 {data.body}
@@ -70,6 +63,7 @@ const CommentModel = ({ closeModal }) => {
 };
 
 CommentModel.propTypes = {
-  closeModal: PropTypes.func,
+  closeModal: PropTypes.function,
+  post: PropTypes.obj,
 };
 export default CommentModel;
