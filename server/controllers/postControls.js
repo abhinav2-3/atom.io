@@ -96,12 +96,12 @@ export const likeSaveCount = async (req, res) => {
   }
 };
 export const addComment = async (req, res) => {
-  const { userId, body, postId } = req.body;
+  const { username, body, postId } = req.body;
 
   try {
     await Post.findByIdAndUpdate(
       postId,
-      { $push: { comments: { commentedBy: userId, body } } },
+      { $push: { comments: { commentedBy: username, body } } },
       {
         new: true,
       }

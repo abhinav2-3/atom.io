@@ -126,7 +126,7 @@ const useAPICalls = () => {
   const addComment = async (postId, body) => {
     try {
       const response = await axios.put(API_ADDCOMMENT, {
-        userId: user?._id,
+        username: user?.username,
         postId,
         body,
       });

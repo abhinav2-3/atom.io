@@ -45,15 +45,13 @@ const CommentModel = ({ closeModal, post }) => {
             {loading ? "Please Wait" : "Comment"}
           </button>
         </div>
-        <div className="w-full mt-4 overflow-auto h-5/6 feed text-white flex flex-col gap-4">
+        <div className="w-full px-4 mt-4 overflow-auto h-5/6 feed text-white flex flex-col gap-4">
           {comments?.map((data) => {
             return (
-              <li
-                key={data._id}
-                className="list-none border p-3 border-slate-500 rounded-lg"
-              >
-                {data.body}
-              </li>
+              <div key={data._id} className=" border px-4 py-1 rounded-lg">
+                <span className="text-slate-600">@{data.commentedBy}</span>
+                <li className="list-none text-lg font-semibold">{data.body}</li>
+              </div>
             );
           })}
         </div>
